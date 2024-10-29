@@ -1,0 +1,9 @@
+{
+   "conventionalCommits.scopes": [
+      "contributing",
+      "commits",
+      "local",
+      "workflow",
+      "framework"
+   ]
+}

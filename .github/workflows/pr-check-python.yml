@@ -1,0 +1,27 @@
+name: PR Check - Python
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'
+      - run: pip install flake8 black mypy
+      - run: flake8 .  # Revisar el código con Flake8
+      - run: black . --check  # Verificar formato con Black
+      - run: mypy .  # Verificación de tipos con mypy
+
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check PR title
+        run: commitlint --edit --env GITHUB_PULL_REQUEST_TITLE="${{ github.event.pull_request.title }}"
