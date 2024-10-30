@@ -4,6 +4,7 @@
       "commits",
       "local",
       "workflow",
-      "framework"
+      "framework",
+      "domain"
    ]
 }
