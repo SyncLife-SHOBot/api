@@ -1,29 +1,22 @@
-import uuid
+from dataclasses import dataclass
 from typing import Optional
+from api.v1.shared.domain.validators import UuidValidator
+import uuid
 
 
+@dataclass(frozen=True)
 class Uuid:
-    def __init__(self, id: Optional[str] = None) -> None:
-        if id is None:
-            self.__id = str(uuid.uuid4())
-        else:
-            self.__id = self.__validate_uuid(id)
+    id: Optional[str] = None
 
-    @property
-    def id(self) -> str:
-        return self.__id
+    def __post_init__(self) -> None:
+        validated_id = UuidValidator.validate(self.id) if self.id else str(uuid.uuid4())
+        object.__setattr__(self, "id", validated_id)
 
-    @staticmethod
-    def __validate_uuid(id: str) -> str:
-        try:
-            return str(uuid.UUID(id))
-        except ValueError:
-            raise ValueError(f"{id} no es una UUID válida.")
+    def __repr__(self) -> str:
+        return f"<Uuid({self.id})>"
 
     def __eq__(self, other: object) -> bool:
-        if isinstance(other, Uuid):
-            return self.id == other.id
-        return False
+        return self.id == other.id if isinstance(other, Uuid) else False
 
     def __str__(self) -> str:
-        return self.__id
+        return self.id if self.id else ""

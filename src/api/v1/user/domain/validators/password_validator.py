@@ -28,12 +28,6 @@ class PasswordValidator:
 
     @staticmethod
     def is_encrypted(password: str) -> bool:
-        """Determina si la contraseña ya está encriptada comprobando su
-        formato `bcrypt`."""
-        bcrypt_regex = r"^\$2[aby]\$\d{2}\$[./A-Za-z0-9]{53}$"
-        return bool(re.match(bcrypt_regex, password))
-
-    @staticmethod
-    def check_password(plain_password: str, hashed_password: str) -> bool:
-        """Verifica una contraseña en texto plano contra la encriptada."""
-        return bcrypt.checkpw(plain_password.encode(), hashed_password.encode())
+        """Determina si la contraseña ya está encriptada verificando
+        prefijo y longitud."""
+        return password.startswith("$2b$") and len(password) == 60

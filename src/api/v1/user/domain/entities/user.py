@@ -12,6 +12,7 @@ class User:
     password: Password
     full_name: FullName
     birth_date: date
+    phone: str
 
     def __post_init__(self) -> None:
         if self.birth_date > date.today():

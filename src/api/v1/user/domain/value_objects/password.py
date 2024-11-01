@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from api.v1.user.domain.validators import PasswordValidator
+import bcrypt
 
 
 @dataclass(frozen=True)
@@ -7,7 +8,6 @@ class Password:
     password: str
 
     def __post_init__(self) -> None:
-        # Valida y encripta la contraseña si aún no está encriptada
         if not PasswordValidator.is_encrypted(self.password):
             PasswordValidator.validate(self.password)
             encrypted_password = PasswordValidator.encrypt_password(self.password)
@@ -24,4 +24,4 @@ class Password:
 
     def check_password(self, plain_password: str) -> bool:
         """Verifica una contraseña en texto plano contra la encriptada."""
-        return PasswordValidator.check_password(plain_password, self.password)
+        return bcrypt.checkpw(plain_password.encode(), self.password.encode())

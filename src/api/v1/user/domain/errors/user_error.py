@@ -3,6 +3,7 @@ from enum import Enum
 
 class UserTypeError(Enum):
     INVALID_BIRTHDATE = "La fecha de nacimiento no es válida."
+    USER_ALREADY_EXISTS = "El usuario con este email ya existe."
 
 
 class UserError(Exception):
