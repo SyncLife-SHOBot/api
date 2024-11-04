@@ -5,7 +5,7 @@ from src.api.v1.user.application.authentication.register import (
     RegisterUseCase,
     RegisterDto,
 )
-from src.api.v1.user.domain.errors import UserError
+from src.api.v1.user.domain.errors.user_error import UserError
 from src.api.v1.shared.domain.errors import SharedError
 from src.api.v1.shared.infrastructure.persistence import get_session
 
