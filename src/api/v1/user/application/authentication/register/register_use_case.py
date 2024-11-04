@@ -1,21 +1,9 @@
-from dataclasses import dataclass
-from datetime import date
-from api.v1.user.domain.repositories import UserRepository
-from api.v1.user.domain.validators import UserValidator
-from api.v1.user.domain.entities import User
-from api.v1.shared.domain.value_objects import Uuid
-from api.v1.user.domain.value_objects import Email, FullName, Password, Phone
-from api.v1.user.domain.errors import UserError, UserTypeError
-
-
-@dataclass
-class RegisterDto:
-    email: str
-    first_name: str
-    last_name: str
-    phone: str
-    password: str
-    birth_date: date
+from src.api.v1.user.domain.repositories import UserRepository
+from src.api.v1.user.domain.validators import UserValidator
+from src.api.v1.user.domain.entities import User
+from src.api.v1.shared.domain.value_objects import Uuid
+from src.api.v1.user.domain.value_objects import Email, FullName, Password, Phone
+from src.api.v1.user.application.authentication.register import RegisterDto
 
 
 class RegisterUseCase:
@@ -31,8 +19,7 @@ class RegisterUseCase:
 
         UserValidator.validate_minimum_age(dto.birth_date)
 
-        if UserValidator.is_email_already_registered(self.repository, email):
-            raise UserError(UserTypeError.USER_ALREADY_EXISTS)
+        UserValidator.is_email_already_registered(self.repository, email)
 
         user = User(
             uuid=uuid,
@@ -40,7 +27,7 @@ class RegisterUseCase:
             password=password,
             full_name=full_name,
             birth_date=dto.birth_date,
-            phone=phone.phone,
+            phone=phone,
         )
 
         self.repository.save(user)
