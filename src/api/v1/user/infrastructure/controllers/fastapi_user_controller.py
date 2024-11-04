@@ -1,12 +1,10 @@
 from fastapi import HTTPException
 from src.api.v1.user.infrastructure.models import SqlModelUserModel
 from src.api.v1.user.infrastructure.repositories import SQLModelUserRepository
-from src.api.v1.user.application.authentication.register import (
-    RegisterUseCase,
-    RegisterDto,
-)
+from src.api.v1.user.application.authentication.register import RegisterUseCase
+from src.api.v1.user.application.authentication.register.register_dto import RegisterDto
 from src.api.v1.user.domain.errors.user_error import UserError
-from src.api.v1.shared.domain.errors import SharedError
+from src.api.v1.shared.domain.errors.shared_error import SharedError
 from src.api.v1.shared.infrastructure.persistence import get_session
 
 

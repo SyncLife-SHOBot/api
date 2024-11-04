@@ -1,9 +1,9 @@
 from src.api.v1.user.domain.repositories import UserRepository
-from src.api.v1.user.domain.validators import UserValidator
+from src.api.v1.user.domain.validators.user_validator import UserValidator
 from src.api.v1.user.domain.entities import User
 from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.domain.value_objects import Email, FullName, Password, Phone
-from src.api.v1.user.application.authentication.register import RegisterDto
+from src.api.v1.user.application.authentication.register.register_dto import RegisterDto
 
 
 class RegisterUseCase:
