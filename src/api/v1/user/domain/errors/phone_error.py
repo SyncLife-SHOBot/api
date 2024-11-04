@@ -1,10 +1,11 @@
 from enum import Enum
+from src.api.v1.user.domain.errors import UserError
 
 
 class PhoneTypeError(Enum):
     INVALID_PHONE = "El número de teléfono no es válido."
 
 
-class PhoneError(Exception):
+class PhoneError(UserError):
     def __init__(self, error_type: PhoneTypeError):
-        super().__init__(f"Error de Phone: {error_type.value}")
+        super().__init__(f"Error de teléfono: {error_type.value}")

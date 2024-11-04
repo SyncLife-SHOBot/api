@@ -6,6 +6,7 @@
       "workflow",
       "framework",
       "domain",
-      "application"
+      "application",
+      "module"
    ]
 }

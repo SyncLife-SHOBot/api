@@ -1,5 +1,5 @@
 import re
-from api.v1.user.domain.errors import PhoneError, PhoneTypeError
+from src.api.v1.user.domain.errors import PhoneError, PhoneTypeError
 
 
 class PhoneValidator:

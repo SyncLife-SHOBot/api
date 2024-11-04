@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
-from api.v1.shared.domain.validators import UuidValidator
+from src.api.v1.shared.domain.validators import UuidValidator
 import uuid
 
 

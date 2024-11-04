@@ -1,4 +1,4 @@
-from api.v1.user.domain.errors import FullNameError, FullNameTypeError
+from src.api.v1.user.domain.errors import FullNameError, FullNameTypeError
 from typing import Tuple
 
 

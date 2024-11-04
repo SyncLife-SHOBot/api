@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from api.v1.user.domain.validators import PhoneValidator
+from src.api.v1.user.domain.validators import PhoneValidator
 
 
 @dataclass(frozen=True)

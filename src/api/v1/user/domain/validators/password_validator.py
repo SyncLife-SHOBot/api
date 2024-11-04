@@ -1,6 +1,6 @@
 import re
 import bcrypt
-from api.v1.user.domain.errors import PasswordError, PasswordTypeError
+from src.api.v1.user.domain.errors import PasswordError, PasswordTypeError
 
 
 class PasswordValidator:

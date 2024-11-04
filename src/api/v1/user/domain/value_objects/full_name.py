@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from api.v1.user.domain.validators import FullNameValidator
+from src.api.v1.user.domain.validators import FullNameValidator
 
 
 @dataclass(frozen=True)

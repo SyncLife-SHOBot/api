@@ -1,4 +1,5 @@
 from enum import Enum
+from src.api.v1.user.domain.errors import UserError
 
 
 class PasswordTypeError(Enum):
@@ -9,6 +10,6 @@ class PasswordTypeError(Enum):
     MISSING_SPECIAL = "La contraseña debe contener al menos un carácter especial."
 
 
-class PasswordError(Exception):
+class PasswordError(UserError):
     def __init__(self, error_type: PasswordTypeError):
-        super().__init__(f"Error de Password: {error_type.value}")
+        super().__init__(f"Error de contraseña: {error_type.value}")

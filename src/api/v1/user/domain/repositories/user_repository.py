@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
-from api.v1.user.domain.entities import User
-from api.v1.user.domain.value_objects import Email
+from src.api.v1.user.domain.entities import User
+from src.api.v1.user.domain.value_objects import Email
 
 
 class UserRepository(ABC):
@@ -10,7 +10,7 @@ class UserRepository(ABC):
         pass
 
     @abstractmethod
-    def find_by_id(self, id: str) -> User:
+    def find_by_id(self, id: str) -> Optional[User]:
         pass
 
     @abstractmethod
