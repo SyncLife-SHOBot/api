@@ -1,8 +1,10 @@
 from fastapi import HTTPException
-from src.api.v1.user.infrastructure.models import SqlModelUserModel
-from src.api.v1.user.infrastructure.repositories import SQLModelUserRepository
+from src.api.v1.user.infrastructure.persistence.models import SqlModelUserModel
+from src.api.v1.user.infrastructure.persistence.repositories import (
+    SQLModelUserRepository,
+)
+from src.api.v1.user.infrastructure.http.dtos import PydanticRegisterDto
 from src.api.v1.user.application.authentication.register import RegisterUseCase
-from src.api.v1.user.application.authentication.register.register_dto import RegisterDto
 from src.api.v1.user.domain.errors.user_error import UserError
 from src.api.v1.shared.domain.errors.shared_error import SharedError
 from src.api.v1.shared.infrastructure.persistence import get_session
@@ -10,20 +12,13 @@ from src.api.v1.shared.infrastructure.persistence import get_session
 
 class FastApiUserController:
     @staticmethod
-    async def register(user_data: SqlModelUserModel) -> SqlModelUserModel:
+    async def register(user_data: PydanticRegisterDto) -> SqlModelUserModel:
         with get_session() as session:
             user_repo = SQLModelUserRepository(session=session)
         try:
             use_case = RegisterUseCase(user_repo)
 
-            dto = RegisterDto(
-                email=user_data.email,
-                first_name=user_data.first_name,
-                last_name=user_data.last_name,
-                phone=user_data.phone,
-                password=user_data.password,
-                birth_date=user_data.birth_date,
-            )
+            dto = user_data.to_application()
 
             user = use_case.execute(dto)
 

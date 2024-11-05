@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-from src.api.v1.user.infrastructure.routes import user_router
+from src.api.v1.user.infrastructure.http.routes import user_router
 
 app = FastAPI()
 

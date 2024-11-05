@@ -4,7 +4,7 @@ from datetime import datetime
 from src.api.v1.user.domain.repositories import UserRepository
 from src.api.v1.user.domain.entities import User
 from src.api.v1.user.domain.value_objects import Email
-from src.api.v1.user.infrastructure.models import SqlModelUserModel
+from src.api.v1.user.infrastructure.persistence.models import SqlModelUserModel
 
 
 class SQLModelUserRepository(UserRepository):
