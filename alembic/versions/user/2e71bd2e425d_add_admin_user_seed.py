@@ -25,9 +25,9 @@ def upgrade() -> None:
             birth_date, phone, is_deleted, created_at, updated_at
         )
         VALUES (
-            'admin-id',
+            'ef5ba845-d921-48f2-80ab-7e05f9c220ca',
             'admin@example.com',
-            'hashed-password',  -- Sustituye con un hash de contraseña real
+            '$2b$12$O.BO5x2ae0hspRcEpC7XGOCZl6Q6XRf3j.WFdlAJ2420Xk8uzoolu',
             'Admin',
             'User',
             '1990-01-01',
@@ -42,4 +42,4 @@ def upgrade() -> None:
 
 def downgrade() -> None:
     # Eliminar usuario administrador en caso de downgrade
-    op.execute("DELETE FROM users WHERE id = 'admin-id'")
+    op.execute("DELETE FROM users WHERE id = 'ef5ba845-d921-48f2-80ab-7e05f9c220ca'")
