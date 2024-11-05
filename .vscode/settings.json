@@ -4,6 +4,11 @@
       "commits",
       "local",
       "workflow",
-      "framework"
+      "framework",
+      "domain",
+      "application",
+      "module",
+      "migrations",
+      "infrastructure"
    ]
 }

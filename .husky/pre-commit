@@ -1,1 +1,1 @@
-flake8 . && black . && mypy .
+flake8 . && black . && mypy --strict .
