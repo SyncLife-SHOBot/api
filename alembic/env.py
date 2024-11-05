@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import os
 
 from sqlmodel import SQLModel
-from src.api.v1.user.infrastructure.models import SqlModelUserModel
+from src.api.v1.user.infrastructure.persistence.models import SqlModelUserModel
 
 
 models = [SqlModelUserModel]
