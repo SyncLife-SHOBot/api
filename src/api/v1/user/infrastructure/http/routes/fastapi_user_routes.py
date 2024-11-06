@@ -1,11 +1,17 @@
 from fastapi import APIRouter
-from src.api.v1.user.infrastructure.http.controllers import FastApiUserController
-from src.api.v1.user.infrastructure.http.dtos import PydanticRegisterDto
-from src.api.v1.user.infrastructure.persistence.models import SqlModelUserModel
+from src.api.v1.user.infrastructure.http.controllers import (
+    FastApiAuthenticationController,
+)
+from src.api.v1.user.infrastructure.http.dtos.register import (
+    PydanticRegisterRequestDto,
+    PydanticRegisterResponseDto,
+)
 
 router: APIRouter = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.post("/register", response_model=SqlModelUserModel)
-async def register_user(user_data: PydanticRegisterDto) -> SqlModelUserModel:
-    return await FastApiUserController.register(user_data)
+@router.post("/register", response_model=PydanticRegisterResponseDto)
+async def register_user(
+    user_data: PydanticRegisterRequestDto,
+) -> PydanticRegisterResponseDto:
+    return await FastApiAuthenticationController.register(user_data)

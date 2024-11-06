@@ -23,9 +23,9 @@ class SqlModelUserModel(SQLModel, table=True):
     @classmethod
     def from_entity(cls, entity: User) -> "SqlModelUserModel":
         return cls(
-            id=str(entity.uuid),
-            email=str(entity.email),
-            password=str(entity.password),
+            id=str(entity.uuid.id),
+            email=entity.email.email,
+            password=entity.password.password,
             first_name=entity.full_name.first_name,
             last_name=entity.full_name.last_name,
             birth_date=entity.birth_date,

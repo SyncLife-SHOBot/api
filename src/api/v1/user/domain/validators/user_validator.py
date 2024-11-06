@@ -12,7 +12,7 @@ class UserValidator:
             raise UserValidationError(UserValidationTypeError.USER_ALREADY_EXISTS)
 
     @staticmethod
-    def validate_minimum_age(birth_date: date, minimum_age: int = 18) -> None:
+    def validate_minimum_age(birth_date: date, minimum_age: int = 12) -> None:
         today = date.today()
         age = (
             today.year
