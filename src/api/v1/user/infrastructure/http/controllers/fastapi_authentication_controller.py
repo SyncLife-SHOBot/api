@@ -6,8 +6,13 @@ from src.api.v1.user.infrastructure.http.dtos.register import (
     PydanticRegisterRequestDto,
     PydanticRegisterResponseDto,
 )
+from src.api.v1.user.infrastructure.http.dtos.login import (
+    PydanticLoginRequestDto,
+    PydanticLoginResponseDto,
+)
 from src.api.v1.user.infrastructure.persistence.models import SqlModelUserModel
 from src.api.v1.user.application.authentication.register import RegisterUseCase
+from src.api.v1.user.application.authentication.login import LoginUseCase
 from src.api.v1.user.domain.errors.user_error import UserError
 from src.api.v1.shared.domain.errors.shared_error import SharedError
 from src.api.v1.shared.infrastructure.persistence import get_session
@@ -20,9 +25,9 @@ class FastApiAuthenticationController:
         request_dto: PydanticRegisterRequestDto,
     ) -> PydanticRegisterResponseDto:
         with get_session() as session:
-            user_repo = SQLModelUserRepository(session=session)
+            repository = SQLModelUserRepository(session=session)
         try:
-            use_case = RegisterUseCase(user_repo)
+            use_case = RegisterUseCase(repository)
             app_dto = request_dto.to_application()
             user = use_case.execute(app_dto)
 
@@ -31,6 +36,24 @@ class FastApiAuthenticationController:
                 session_token=InMemorySessionService.create_session(str(user.uuid)),
             )
 
+        except (UserError, SharedError) as e:
+            raise HTTPException(status_code=400, detail=str(e))
+        except Exception:
+            raise HTTPException(status_code=500, detail="Error interno del servidor")
+
+    @staticmethod
+    async def login(request_dto: PydanticLoginRequestDto) -> PydanticLoginResponseDto:
+        with get_session() as session:
+            repository = SQLModelUserRepository(session=session)
+        try:
+            use_case = LoginUseCase(repository)
+            app_dto = request_dto.to_application()
+            user = use_case.execute(app_dto)
+
+            return PydanticLoginResponseDto(
+                user=SqlModelUserModel.from_entity(user),
+                session_token=InMemorySessionService.create_session(str(user.uuid)),
+            )
         except (UserError, SharedError) as e:
             raise HTTPException(status_code=400, detail=str(e))
         except Exception:
