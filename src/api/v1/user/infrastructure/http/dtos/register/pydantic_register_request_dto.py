@@ -22,14 +22,12 @@ class PydanticRegisterRequestDto(BaseModel):
         )
 
     @classmethod
-    def from_application(
-        cls, register_dto: RegisterDto
-    ) -> "PydanticRegisterRequestDto":
+    def from_application(cls, app_dto: RegisterDto) -> "PydanticRegisterRequestDto":
         return cls(
-            email=register_dto.email,
-            first_name=register_dto.first_name,
-            last_name=register_dto.last_name,
-            phone=register_dto.phone,
-            password=register_dto.password,
-            birth_date=register_dto.birth_date,
+            email=app_dto.email,
+            first_name=app_dto.first_name,
+            last_name=app_dto.last_name,
+            phone=app_dto.phone,
+            password=app_dto.password,
+            birth_date=app_dto.birth_date,
         )
