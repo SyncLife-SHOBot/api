@@ -12,6 +12,11 @@ class Uuid:
         validated_id = UuidValidator.validate(self.id) if self.id else str(uuid.uuid4())
         object.__setattr__(self, "id", validated_id)
 
+    @classmethod
+    def generate(cls) -> "Uuid":
+        """Genera un nuevo Uuid."""
+        return cls(str(uuid.uuid4()))    
+
     def __repr__(self) -> str:
         return f"<Uuid({self.id})>"
 
