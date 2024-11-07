@@ -1,5 +1,5 @@
 from typing import List, Optional
-from sqlmodel import Session, select
+from sqlmodel import Session, select, not_
 from datetime import datetime
 from src.api.v1.user.domain.repositories import UserRepository
 from src.api.v1.user.domain.entities import User
@@ -12,22 +12,27 @@ class SQLModelUserRepository(UserRepository):
         self.session = session
 
     def find_all(self) -> List[User]:
-        statement = select(SqlModelUserModel).where(not SqlModelUserModel.is_deleted)
+        statement = select(SqlModelUserModel).where(not_(SqlModelUserModel.is_deleted))
         users = self.session.exec(statement).all()
         return [user.to_entity() for user in users]
 
     def find_by_id(self, id: str) -> Optional[User]:
-        statement = select(SqlModelUserModel).where(
-            SqlModelUserModel.id == id, not SqlModelUserModel.is_deleted
+        statement = (
+            select(SqlModelUserModel)
+            .where(SqlModelUserModel.id == id)
+            .where(not_(SqlModelUserModel.is_deleted))
         )
         user = self.session.exec(statement).first()
         return user.to_entity() if user else None
 
     def find_by_email(self, email: Email) -> Optional[User]:
-        statement = select(SqlModelUserModel).where(
-            SqlModelUserModel.email == str(email), not SqlModelUserModel.is_deleted
+        statement = (
+            select(SqlModelUserModel)
+            .where(SqlModelUserModel.email == str(email))
+            .where(not_(SqlModelUserModel.is_deleted))
         )
         user = self.session.exec(statement).first()
+
         return user.to_entity() if user else None
 
     def save(self, user: User) -> bool:

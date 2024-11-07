@@ -1,3 +1,4 @@
-from .fastapi_user_controller import FastApiUserController
+from .fastapi_authentication_controller import FastApiAuthenticationController
+from .fastapi_account_management_controller import FastApiAccountManagementController
 
-__all__ = ["FastApiUserController"]
+__all__ = ["FastApiAuthenticationController", "FastApiAccountManagementController"]

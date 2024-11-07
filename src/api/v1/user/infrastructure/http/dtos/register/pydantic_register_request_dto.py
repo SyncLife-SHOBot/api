@@ -3,7 +3,7 @@ from datetime import date
 from src.api.v1.user.application.authentication.register.register_dto import RegisterDto
 
 
-class PydanticRegisterDto(BaseModel):
+class PydanticRegisterRequestDto(BaseModel):
     email: EmailStr
     first_name: str
     last_name: str
@@ -22,12 +22,12 @@ class PydanticRegisterDto(BaseModel):
         )
 
     @classmethod
-    def from_application(cls, register_dto: RegisterDto) -> "PydanticRegisterDto":
+    def from_application(cls, app_dto: RegisterDto) -> "PydanticRegisterRequestDto":
         return cls(
-            email=register_dto.email,
-            first_name=register_dto.first_name,
-            last_name=register_dto.last_name,
-            phone=register_dto.phone,
-            password=register_dto.password,
-            birth_date=register_dto.birth_date,
+            email=app_dto.email,
+            first_name=app_dto.first_name,
+            last_name=app_dto.last_name,
+            phone=app_dto.phone,
+            password=app_dto.password,
+            birth_date=app_dto.birth_date,
         )
