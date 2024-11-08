@@ -9,6 +9,7 @@ from src.api.v1.user.domain.value_objects.phone import Phone
 from src.api.v1.inventory.domain.entities import Inventory
 
 
+
 @dataclass
 class User:
     uuid: Uuid
