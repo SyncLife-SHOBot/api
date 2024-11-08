@@ -9,9 +9,12 @@ import os
 
 from sqlmodel import SQLModel
 from src.api.v1.user.infrastructure.persistence.models import SqlModelUserModel
+from src.api.v1.inventory.infrastructure.persistence.models import (
+    SqlModelInventoryModel,
+)
 
 
-models = [SqlModelUserModel]
+models = [SqlModelUserModel, SqlModelInventoryModel]
 
 # Cargar variables de entorno
 load_dotenv()

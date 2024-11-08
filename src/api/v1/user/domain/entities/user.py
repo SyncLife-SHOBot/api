@@ -8,6 +8,7 @@ from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.domain.value_objects.phone import Phone
 
 
+
 @dataclass
 class User:
     uuid: Uuid

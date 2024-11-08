@@ -1,5 +1,8 @@
 from dataclasses import dataclass
-from src.api.v1.inventory.domain.validators.product_name_validator import ProductNameValidator
+from src.api.v1.inventory.domain.validators.product_name_validator import (
+    ProductNameValidator,
+)
+
 
 @dataclass(frozen=True)
 class ProductName:

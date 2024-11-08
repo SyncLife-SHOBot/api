@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import date
 
+
 @dataclass
 class UpdateItemDto:
     inventory_id: str

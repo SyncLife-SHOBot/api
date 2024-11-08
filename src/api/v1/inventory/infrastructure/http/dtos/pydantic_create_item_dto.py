@@ -2,9 +2,10 @@ from pydantic import BaseModel
 from datetime import date
 from src.api.v1.inventory.application.create.create_item_dto import CreateItemDto
 
+
 class PydanticCreateItemDto(BaseModel):
-    user_id : str
-    product_name : str
+    user_id: str
+    product_name: str
     amount: int
     expiration_date: date
 
@@ -13,5 +14,5 @@ class PydanticCreateItemDto(BaseModel):
             user_id=self.user_id,
             product_name=self.product_name,
             amount=self.amount,
-            expiration_date=self.expiration_date
+            expiration_date=self.expiration_date,
         )

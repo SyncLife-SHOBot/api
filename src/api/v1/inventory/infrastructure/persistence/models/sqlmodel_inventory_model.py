@@ -1,37 +1,45 @@
-from sqlmodel import  SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
 from datetime import date
 from src.api.v1.inventory.domain.entities.inventory import Inventory
 from src.api.v1.shared.domain.value_objects import Uuid
-from src.api.v1.inventory.domain.value_objects.amount import Amount
-from src.api.v1.inventory.domain.value_objects.expiration_date import ExpirationDate
-from src.api.v1.inventory.domain.value_objects.product_name import ProductName
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (
+        SqlModelUserModel,
+    )
 
 
 class SqlModelInventoryModel(SQLModel, table=True):
-    __tablename__  = "inventory"
+    __tablename__ = "inventory_item"
 
     id: str = Field(primary_key=True)
-    user_id: str
+    user_id: str = Field(foreign_key="users.id")
     product_name: str
     amount: int
     expiration_date: date
+    is_deleted: bool = Field(default=False)
+    created_at: date = Field(default_factory=date.today)
+    updated_at: Optional[date] = Field(default=None)
 
+    user: "SqlModelUserModel" = Relationship(back_populates="inventory_items")
 
     @classmethod
     def from_entity(cls, entity: Inventory) -> "SqlModelInventoryModel":
         return cls(
-            id = str(entity.id),
-            user_id = str(entity.user_id),
-            product_name = str(entity.product_name.name),
-            amount = int(entity.amount.value),
-            expiration_date = date(entity.expiration_date.date)
+            id=str(entity.id),
+            user_id=str(entity.user_id),
+            product_name=str(entity.product_name),
+            amount=int(entity.amount),
+            expiration_date=str(entity.expiration_date),
+            is_deleted=False,
         )
-    
+
     def to_entity(self) -> Inventory:
         return Inventory(
-            id = Uuid(self.id),
-            user_id = Uuid(self.user_id),
-            product_name = ProductName(self.product_name),
-            amount = Amount(self.amount),
-            expiration_date = ExpirationDate(self.expiration_date)
+            id=Uuid(self.id),
+            user_id=Uuid(self.user_id),
+            product_name=self.product_name,
+            amount=self.amount,
+            expiration_date=self.expiration_date,
         )

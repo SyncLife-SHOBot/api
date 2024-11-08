@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from src.api.v1.inventory.domain.validators.amount_validator import AmountValidator
 
+
 @dataclass(frozen=True)
 class Amount:
     value: int

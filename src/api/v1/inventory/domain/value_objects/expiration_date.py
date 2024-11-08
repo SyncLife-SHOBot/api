@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 from datetime import date
-from src.api.v1.inventory.domain.validators.expiration_validator import ExpirationDateValidator
+from src.api.v1.inventory.domain.validators.expiration_validator import (
+    ExpirationDateValidator,
+)
+
 
 @dataclass(frozen=True)
 class ExpirationDate:

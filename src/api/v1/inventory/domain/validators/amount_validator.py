@@ -1,4 +1,8 @@
-from src.api.v1.inventory.domain.errors.inventoryItem_error import InventoryItemError, InventoryItemTypeError
+from src.api.v1.inventory.domain.errors.inventoryItem_error import (
+    InventoryItemError,
+    InventoryItemTypeError,
+)
+
 
 class AmountValidator:
     @staticmethod
