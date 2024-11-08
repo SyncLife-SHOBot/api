@@ -18,6 +18,7 @@ from src.api.v1.user.infrastructure.http.services import InMemorySessionService
 router: APIRouter = APIRouter(prefix="/inventory", tags=["Inventory"])
 
 
+
 @router.post("/create", response_model=PydanticCreateItemResponseDto)
 async def create_inventory_item(
     dto: PydanticCreateItemRequestDto,

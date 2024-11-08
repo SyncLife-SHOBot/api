@@ -1,3 +1,4 @@
+from src.api.v1.shared.domain.value_objects import Uuid
 from fastapi import HTTPException
 from src.api.v1.inventory.domain.errors import (
     InventoryItemTypeError,
@@ -36,6 +37,7 @@ class FastApiInventoryController:
             repo = SQLModelInventoryRepository(session=session)
             use_case = CreateItem(repo)
             dto = item_data.to_application()
+            logging.debug("DEBUG - DTO passed to use case: %s", dto)
             item = use_case.execute(dto)
             return PydanticCreateItemResponseDto(
                 item=SqlModelInventoryModel.from_entity(item)

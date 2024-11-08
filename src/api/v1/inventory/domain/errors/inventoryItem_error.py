@@ -2,6 +2,7 @@ from enum import Enum
 from src.api.v1.inventory.domain.errors import InventoryError
 
 
+
 class InventoryItemTypeError(Enum):
     INVALID_PRODUCT_NAME = "El nombre del producto no puede estar vacio."
     INVALID_AMOUNT = "La cantidad del producto debe ser mayor a 0."
