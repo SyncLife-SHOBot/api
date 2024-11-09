@@ -6,6 +6,10 @@ from src.api.v1.inventory.domain.repositories.inventory_repository import (
     InventoryRepository,
 )
 from src.api.v1.inventory.application.view.view_item_dto import ViewItemDTO
+from src.api.v1.inventory.domain.errors.inventoryItem_error import (
+    InventoryItemError,
+    InventoryItemTypeError,
+)
 
 
 class ViewItem:
@@ -20,5 +24,5 @@ class ViewItem:
         )
         inventory_item = self.repository.find_by_id(inventory_id)
         if not inventory_item:
-            raise ValueError("Item not found")
+            raise InventoryItemError(InventoryItemTypeError.ITEM_NOT_FOUND)
         return inventory_item

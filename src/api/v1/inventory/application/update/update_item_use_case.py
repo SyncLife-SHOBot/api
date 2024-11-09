@@ -4,6 +4,10 @@ from src.api.v1.inventory.domain.repositories.inventory_repository import (
     InventoryRepository,
 )
 from src.api.v1.inventory.application.update.update_item_dto import UpdateItemDto
+from src.api.v1.inventory.domain.errors.inventoryItem_error import (
+    InventoryItemTypeError,
+    InventoryItemError,
+)
 
 
 class UpdateItem:
@@ -18,7 +22,7 @@ class UpdateItem:
         )
         inventory_item = self.repository.find_by_id(inventory_id)
         if not inventory_item:
-            raise ValueError("item not found")
+            raise InventoryItemError(InventoryItemTypeError.ITEM_NOT_FOUND)
 
         update_inventory_item = Inventory(
             id=inventory_item.id,
