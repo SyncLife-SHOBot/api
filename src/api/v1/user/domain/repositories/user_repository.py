@@ -14,8 +14,6 @@ class UserRepository(ABC):
     def find_by_id(self, id: Uuid, include_deleted: bool = False) -> Optional[User]:
         pass
 
-    # Mejor Uuid en vez de str?
-
     @abstractmethod
     def find_by_email(
         self, email: Email, include_deleted: bool = False
