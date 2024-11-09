@@ -16,3 +16,12 @@ class PydanticUpdateItemDto(BaseModel):
             amount=self.amount,
             expiration_date=self.expiration_date,
         )
+
+    @classmethod
+    def from_application(cls, app_dto: UpdateItemDto) -> "PydanticUpdateItemDto":
+        return cls(
+            inventory_id=app_dto.inventory_id,
+            product_name=app_dto.product_name,
+            amount=app_dto.amount,
+            expiration_date=app_dto.expiration_date,
+        )
