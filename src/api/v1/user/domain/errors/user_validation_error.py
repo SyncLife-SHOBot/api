@@ -5,7 +5,6 @@ from src.api.v1.user.domain.errors.user_error import UserError
 class UserValidationTypeError(Enum):
     INVALID_BIRTHDATE = "La fecha de nacimiento no es válida."
     USER_ALREADY_EXISTS = "El usuario con este email ya existe."
-    USER_NOT_FOUND = "El usuario no esta registrado."
     INVALID_CREDENTIALS = "El email o la contraseño son incorrectos."
 
 

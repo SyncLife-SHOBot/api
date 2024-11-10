@@ -7,7 +7,7 @@ from src.api.v1.user.domain.errors import UserValidationError, UserValidationTyp
 class UserValidator:
     @staticmethod
     def is_email_already_registered(repository: UserRepository, email: Email) -> None:
-        existing_user = repository.find_by_email(email)
+        existing_user = repository.find_by_email(email, True)
         if existing_user is not None:
             raise UserValidationError(UserValidationTypeError.USER_ALREADY_EXISTS)
 

@@ -1,6 +1,7 @@
 import uuid
 from typing import Dict, Optional, Any
 from datetime import datetime, timedelta
+from fastapi import HTTPException, Header
 
 
 class InMemorySessionService:
@@ -32,3 +33,10 @@ class InMemorySessionService:
     def delete_session(cls, session_token: str) -> None:
         if session_token in cls._sessions:
             del cls._sessions[session_token]
+
+    @classmethod
+    async def validate_session_token(cls, session_token: str = Header(...)) -> str:
+        user_id = cls.get_user_from_session(session_token)
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Sesión inválida o expirada")
+        return user_id

@@ -38,8 +38,10 @@ class FastApiAuthenticationController:
 
         except (UserError, SharedError) as e:
             raise HTTPException(status_code=400, detail=str(e))
-        except Exception:
-            raise HTTPException(status_code=500, detail="Error interno del servidor")
+        except Exception as e:
+            raise HTTPException(
+                status_code=500, detail=f"Error interno del servidor: {e}"
+            )
 
     @staticmethod
     async def login(request_dto: PydanticLoginRequestDto) -> PydanticLoginResponseDto:
@@ -56,8 +58,10 @@ class FastApiAuthenticationController:
             )
         except (UserError, SharedError) as e:
             raise HTTPException(status_code=400, detail=str(e))
-        except Exception:
-            raise HTTPException(status_code=500, detail="Error interno del servidor")
+        except Exception as e:
+            raise HTTPException(
+                status_code=500, detail=f"Error interno del servidor: {e}"
+            )
 
     @staticmethod
     async def get_authenticated_user(session_token: str) -> SqlModelUserModel:

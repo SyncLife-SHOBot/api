@@ -1,0 +1,30 @@
+from src.api.v1.shared.domain.value_objects import Uuid
+from src.api.v1.user.application.account_management.delete_account.delete_account_dto import (  # noqa: E501
+    DeleteAccountDto,
+)
+from src.api.v1.user.domain.entities import User
+from src.api.v1.user.domain.errors import (
+    UserRepositoryError,
+    UserRepositoryTypeError,
+)
+from src.api.v1.user.domain.repositories import UserRepository
+
+
+class DeleteAccountUseCase:
+    def __init__(self, repository: UserRepository) -> None:
+        self.repository = repository
+
+    def execute(self, dto: DeleteAccountDto) -> User:
+        uuid = Uuid(dto.uuid)
+
+        user = self.repository.find_by_id(str(uuid))
+
+        if user is None:
+            raise UserRepositoryError(UserRepositoryTypeError.USER_NOT_FOUND)
+
+        is_deleted, user = self.repository.delete(user)
+
+        if not is_deleted or user is None:
+            raise UserRepositoryError(UserRepositoryTypeError.OPERATION_FAILED)
+
+        return user

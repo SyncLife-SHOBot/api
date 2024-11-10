@@ -3,9 +3,9 @@ from src.api.v1.user.application.account_management.view_account.view_account_dt
     ViewAccountDto,
 )
 from src.api.v1.user.domain.entities import User
-from src.api.v1.user.domain.errors.user_validation_error import (
-    UserValidationError,
-    UserValidationTypeError,
+from src.api.v1.user.domain.errors import (
+    UserRepositoryError,
+    UserRepositoryTypeError,
 )
 from src.api.v1.user.domain.repositories import UserRepository
 
@@ -20,6 +20,6 @@ class ViewAccountUseCase:
         user = self.repository.find_by_id(str(uuid))
 
         if user is None:
-            raise UserValidationError(UserValidationTypeError.USER_NOT_FOUND)
+            raise UserRepositoryError(UserRepositoryTypeError.USER_NOT_FOUND)
 
         return user

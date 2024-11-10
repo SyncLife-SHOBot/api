@@ -1,3 +1,4 @@
+from datetime import datetime
 from src.api.v1.user.domain.repositories import UserRepository
 from src.api.v1.user.domain.validators.user_validator import UserValidator
 from src.api.v1.user.domain.entities import User
@@ -28,6 +29,9 @@ class RegisterUseCase:
             full_name=full_name,
             birth_date=dto.birth_date,
             phone=phone,
+            is_deleted=False,
+            created_at=datetime.now(),
+            updated_at=None,
         )
 
         self.repository.save(user)

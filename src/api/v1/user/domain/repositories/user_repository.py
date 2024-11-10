@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from src.api.v1.user.domain.entities import User
 from src.api.v1.user.domain.value_objects import Email
 
@@ -10,11 +10,13 @@ class UserRepository(ABC):
         pass
 
     @abstractmethod
-    def find_by_id(self, id: str) -> Optional[User]:
+    def find_by_id(self, id: str, include_deleted: bool = False) -> Optional[User]:
         pass
 
     @abstractmethod
-    def find_by_email(self, email: Email) -> Optional[User]:
+    def find_by_email(
+        self, email: Email, include_deleted: bool = False
+    ) -> Optional[User]:
         pass
 
     @abstractmethod
@@ -22,9 +24,9 @@ class UserRepository(ABC):
         pass
 
     @abstractmethod
-    def delete(self, user: User) -> bool:
+    def delete(self, user: User) -> Tuple[bool, Optional[User]]:
         pass
 
     @abstractmethod
-    def update(self, user: User) -> bool:
+    def update(self, user: User) -> Tuple[bool, Optional[User]]:
         pass
