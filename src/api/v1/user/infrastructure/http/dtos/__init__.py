@@ -9,6 +9,10 @@ from .change_password import (
     PydanticChangePasswordRequestDto,
     PydanticChangePasswordResponseDto,
 )
+from .change_personal_information import (
+    PydanticChangePersonalInformationRequestDto,
+    PydanticChangePersonalInformationResponseDto,
+)
 
 
 __all__ = [
@@ -22,4 +26,6 @@ __all__ = [
     "PydanticDeleteAccountResponseDto",
     "PydanticChangePasswordRequestDto",
     "PydanticChangePasswordResponseDto",
+    "PydanticChangePersonalInformationRequestDto",
+    "PydanticChangePersonalInformationResponseDto",
 ]

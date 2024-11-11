@@ -14,6 +14,8 @@ from src.api.v1.user.infrastructure.http.dtos import (
     PydanticDeleteAccountResponseDto,
     PydanticChangePasswordRequestDto,
     PydanticChangePasswordResponseDto,
+    PydanticChangePersonalInformationRequestDto,
+    PydanticChangePersonalInformationResponseDto,
 )
 from src.api.v1.user.infrastructure.http.services import InMemorySessionService
 
@@ -55,3 +57,13 @@ async def change_user_password(
     user_id: str = Depends(InMemorySessionService.validate_session_token),
 ) -> PydanticChangePasswordResponseDto:
     return await FastApiAccountManagementController.change_password(dto, user_id)
+
+
+@router.put("/", response_model=PydanticChangePersonalInformationResponseDto)
+async def change_user_personal_info(
+    dto: PydanticChangePersonalInformationRequestDto,
+    user_id: str = Depends(InMemorySessionService.validate_session_token),
+) -> PydanticChangePersonalInformationResponseDto:
+    return await FastApiAccountManagementController.change_personal_information(
+        dto, user_id
+    )
