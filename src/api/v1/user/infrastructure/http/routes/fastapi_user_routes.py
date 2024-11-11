@@ -3,21 +3,17 @@ from src.api.v1.user.infrastructure.http.controllers import (
     FastApiAuthenticationController,
     FastApiAccountManagementController,
 )
-from src.api.v1.user.infrastructure.http.dtos.register import (
+from src.api.v1.user.infrastructure.http.dtos import (
     PydanticRegisterRequestDto,
     PydanticRegisterResponseDto,
-)
-from src.api.v1.user.infrastructure.http.dtos.login import (
     PydanticLoginRequestDto,
     PydanticLoginResponseDto,
-)
-from src.api.v1.user.infrastructure.http.dtos.view_account import (
     PydanticViewAccountRequestDto,
     PydanticViewAccountResponseDto,
-)
-from src.api.v1.user.infrastructure.http.dtos.delete_account import (
     PydanticDeleteAccountRequestDto,
     PydanticDeleteAccountResponseDto,
+    PydanticChangePasswordRequestDto,
+    PydanticChangePasswordResponseDto,
 )
 from src.api.v1.user.infrastructure.http.services import InMemorySessionService
 
@@ -51,3 +47,11 @@ async def delete_account_user(
     user_id: str = Depends(InMemorySessionService.validate_session_token),
 ) -> PydanticDeleteAccountResponseDto:
     return await FastApiAccountManagementController.delete_account(dto, user_id)
+
+
+@router.put("/change_password", response_model=PydanticChangePasswordResponseDto)
+async def change_user_password(
+    dto: PydanticChangePasswordRequestDto,
+    user_id: str = Depends(InMemorySessionService.validate_session_token),
+) -> PydanticChangePasswordResponseDto:
+    return await FastApiAccountManagementController.change_password(dto, user_id)

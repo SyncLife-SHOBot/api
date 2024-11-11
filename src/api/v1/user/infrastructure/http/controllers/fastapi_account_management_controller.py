@@ -1,26 +1,30 @@
 from fastapi import HTTPException
-from src.api.v1.shared.domain.errors.shared_error import SharedError
 from src.api.v1.shared.infrastructure.persistence import get_session
-from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (
+from src.api.v1.shared.domain.errors.shared_error import SharedError
+from src.api.v1.user.domain.errors.user_error import UserError
+from src.api.v1.user.domain.errors.user_repository_error import (
+    UserRepositoryError,
+    UserRepositoryTypeError,
+)
+from src.api.v1.user.domain.value_objects import Email
+from src.api.v1.user.infrastructure.http.dtos import (
+    PydanticChangePasswordRequestDto,
+    PydanticChangePasswordResponseDto,
+    PydanticViewAccountRequestDto,
+    PydanticViewAccountResponseDto,
+    PydanticDeleteAccountRequestDto,
+    PydanticDeleteAccountResponseDto,
+)
+from src.api.v1.user.infrastructure.persistence.models import (
     SqlModelUserModel,
 )
 from src.api.v1.user.infrastructure.persistence.repositories import (
     SQLModelUserRepository,
 )
-from src.api.v1.user.application.account_management.view_account import (
+from src.api.v1.user.application import (
     ViewAccountUseCase,
-)
-from src.api.v1.user.application.account_management.delete_account import (
     DeleteAccountUseCase,
-)
-from src.api.v1.user.domain.errors.user_error import UserError
-from src.api.v1.user.infrastructure.http.dtos.view_account import (
-    PydanticViewAccountRequestDto,
-    PydanticViewAccountResponseDto,
-)
-from src.api.v1.user.infrastructure.http.dtos.delete_account import (
-    PydanticDeleteAccountRequestDto,
-    PydanticDeleteAccountResponseDto,
+    ChangePasswordUseCase,
 )
 
 
@@ -68,6 +72,37 @@ class FastApiAccountManagementController:
             user = use_case.execute(app_dto)
 
             return PydanticDeleteAccountResponseDto(
+                user=SqlModelUserModel.from_entity(user)
+            )
+        except (UserError, SharedError) as e:
+            raise HTTPException(status_code=400, detail=str(e))
+        except Exception as e:
+            raise HTTPException(
+                status_code=500, detail=f"Error interno del servidor: {e}"
+            )
+
+    @staticmethod
+    async def change_password(
+        request_dto: PydanticChangePasswordRequestDto, user_request_id: str
+    ) -> PydanticChangePasswordResponseDto:
+        with get_session() as session:
+            repository = SQLModelUserRepository(session=session)
+        try:
+            validation_user = repository.find_by_email(Email(request_dto.email))
+
+            if validation_user is None:
+                raise UserRepositoryError(UserRepositoryTypeError.USER_NOT_FOUND)
+
+            if not user_request_id == validation_user.uuid.id:
+                raise HTTPException(
+                    status_code=403, detail="No tienes permisos para hacer esto."
+                )
+
+            use_case = ChangePasswordUseCase(repository)
+            app_dto = request_dto.to_application()
+            user = use_case.execute(app_dto)
+
+            return PydanticChangePasswordResponseDto(
                 user=SqlModelUserModel.from_entity(user)
             )
         except (UserError, SharedError) as e:

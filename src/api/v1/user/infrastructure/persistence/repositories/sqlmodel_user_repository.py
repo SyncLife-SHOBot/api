@@ -58,8 +58,19 @@ class SQLModelUserRepository(UserRepository):
         db_user = self.session.exec(statement).first()
         if db_user:
             db_user.updated_at = datetime.now()
-            for key, value in user.as_dict(exclude_unset=True).items():
-                setattr(db_user, key, value)
+            if user.email.email != db_user.email:
+                db_user.email = user.email.email
+            if user.password.password != db_user.password:
+                db_user.password = user.password.password
+            if user.full_name.first_name != db_user.first_name:
+                db_user.first_name = user.full_name.first_name
+            if user.full_name.last_name != db_user.last_name:
+                db_user.last_name = user.full_name.last_name
+            if user.birth_date != db_user.birth_date:
+                db_user.birth_date = user.birth_date
+            if user.phone.phone != user.phone:
+                db_user.phone = user.phone.phone
+
             self.session.add(db_user)
             self.session.commit()
             self.session.refresh(db_user)
