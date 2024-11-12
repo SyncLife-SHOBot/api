@@ -1,3 +1,3 @@
-from .sqlmodel_user_repository import SQLModelUserRepository
+from .sqlmodel_user_repository import SqlModelUserRepository
 
-__all__ = ["SQLModelUserRepository"]
+__all__ = ["SqlModelUserRepository"]

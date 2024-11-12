@@ -34,7 +34,7 @@ def upgrade() -> None:
             '1234567890',
             FALSE,
             NOW(),
-            NOW()
+            NULL
         )
         """
     )

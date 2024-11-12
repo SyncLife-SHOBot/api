@@ -1,12 +1,13 @@
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, datetime
+from typing import Optional
+from src.api.v1.user.domain.validators.user_validator import UserValidator
 from src.api.v1.user.domain.value_objects import Email, FullName, Password
 from src.api.v1.shared.domain.value_objects import Uuid
-from src.api.v1.user.domain.errors import UserValidationError, UserValidationTypeError
 from src.api.v1.user.domain.value_objects.phone import Phone
 
 
-@dataclass(frozen=True)
+@dataclass
 class User:
     uuid: Uuid
     email: Email
@@ -14,10 +15,12 @@ class User:
     full_name: FullName
     birth_date: date
     phone: Phone
+    is_deleted: bool
+    created_at: datetime
+    updated_at: Optional[datetime]
 
     def __post_init__(self) -> None:
-        if self.birth_date > date.today():
-            raise UserValidationError(UserValidationTypeError.INVALID_BIRTHDATE)
+        UserValidator.validate_minimum_age(self.birth_date)
 
     def __repr__(self) -> str:
         return f"<User(uuid={self.uuid}, email={self.email}, phone={self.phone})>"

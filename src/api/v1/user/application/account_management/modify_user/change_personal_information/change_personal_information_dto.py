@@ -3,9 +3,9 @@ from datetime import date
 
 
 @dataclass
-class RegisterDto:
+class ChangePersonalInformationDto:
+    uuid: str
     email: str
-    password: str
     first_name: str
     last_name: str
     birth_date: date

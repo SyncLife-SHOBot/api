@@ -8,6 +8,7 @@ class PasswordTypeError(Enum):
     MISSING_UPPERCASE = "La contraseña debe contener al menos una letra mayúscula."
     MISSING_LOWERCASE = "La contraseña debe contener al menos una letra minúscula."
     MISSING_SPECIAL = "La contraseña debe contener al menos un carácter especial."
+    WEAK_PASSWORD = "La contraseño es demasiade debíl."
 
 
 class PasswordError(UserError):

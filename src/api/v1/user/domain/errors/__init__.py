@@ -3,6 +3,7 @@ from .full_name_error import FullNameError, FullNameTypeError
 from .password_error import PasswordError, PasswordTypeError
 from .user_validation_error import UserValidationError, UserValidationTypeError
 from .phone_error import PhoneError, PhoneTypeError
+from .user_repository_error import UserRepositoryError, UserRepositoryTypeError
 
 __all__ = [
     "EmailError",
@@ -15,4 +16,6 @@ __all__ = [
     "UserValidationTypeError",
     "PhoneError",
     "PhoneTypeError",
+    "UserRepositoryError",
+    "UserRepositoryTypeError",
 ]

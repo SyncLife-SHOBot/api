@@ -2,6 +2,8 @@ import re
 import bcrypt
 from src.api.v1.user.domain.errors import PasswordError, PasswordTypeError
 
+# import zxcvbn
+
 
 class PasswordValidator:
     @staticmethod
@@ -17,6 +19,11 @@ class PasswordValidator:
             raise PasswordError(PasswordTypeError.MISSING_LOWERCASE)
         if not re.search(r"[\W_]", password):
             raise PasswordError(PasswordTypeError.MISSING_SPECIAL)
+
+        # result = zxcvbn(password)
+        # if result["score"] < 3:
+        #     raise PasswordError(PasswordTypeError.WEAK_PASSWORD)
+
         return password
 
     @staticmethod

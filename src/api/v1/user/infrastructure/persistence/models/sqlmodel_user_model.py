@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from sqlmodel import SQLModel, Field
 from typing import Optional
 from src.api.v1.user.domain.entities import User
@@ -17,8 +17,8 @@ class SqlModelUserModel(SQLModel, table=True):
     birth_date: date
     phone: str
     is_deleted: bool = Field(default=False)
-    created_at: date = Field(default_factory=date.today)
-    updated_at: Optional[date] = Field(default=None)
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: Optional[datetime] = Field(default=None)
 
     @classmethod
     def from_entity(cls, entity: User) -> "SqlModelUserModel":
@@ -30,7 +30,9 @@ class SqlModelUserModel(SQLModel, table=True):
             last_name=entity.full_name.last_name,
             birth_date=entity.birth_date,
             phone=entity.phone.phone,
-            is_deleted=False,
+            is_deleted=entity.is_deleted,
+            created_at=entity.created_at,
+            updated_at=entity.updated_at,
         )
 
     def to_entity(self) -> User:
@@ -41,4 +43,7 @@ class SqlModelUserModel(SQLModel, table=True):
             full_name=FullName(self.first_name, self.last_name),
             birth_date=self.birth_date,
             phone=Phone(self.phone),
+            is_deleted=self.is_deleted,
+            created_at=self.created_at,
+            updated_at=self.updated_at,
         )
