@@ -7,6 +7,9 @@ from src.api.v1.user.domain.errors.user_repository_error import (
     UserRepositoryTypeError,
 )
 from src.api.v1.user.domain.repositories import UserRepository
+from src.api.v1.user.domain.validators.user_repository_validator import (
+    UserRepositoryValidator,
+)
 from src.api.v1.user.domain.value_objects.email import Email
 from src.api.v1.user.domain.value_objects.password import Password
 
@@ -16,10 +19,9 @@ class ChangePasswordUseCase:
         self.repository = repository
 
     def execute(self, dto: ChangePasswordDto) -> User:
-        user = self.repository.find_by_email(Email(dto.email))
-
-        if user is None:
-            raise UserRepositoryError(UserRepositoryTypeError.USER_NOT_FOUND)
+        user = UserRepositoryValidator.user_found(
+            self.repository.find_by_email(Email(dto.email))
+        )
 
         user.password = Password(dto.new_password)
 

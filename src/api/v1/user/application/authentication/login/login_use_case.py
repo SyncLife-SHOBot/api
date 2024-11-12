@@ -3,10 +3,11 @@ from src.api.v1.user.domain.entities.user import User
 from src.api.v1.user.domain.errors import (
     UserValidationError,
     UserValidationTypeError,
-    UserRepositoryError,
-    UserRepositoryTypeError,
 )
 from src.api.v1.user.domain.repositories.user_repository import UserRepository
+from src.api.v1.user.domain.validators.user_repository_validator import (
+    UserRepositoryValidator,
+)
 from src.api.v1.user.domain.value_objects import Email, Password
 
 
@@ -16,14 +17,10 @@ class LoginUseCase:
 
     def execute(self, dto: LoginDto) -> User:
         email = Email(dto.email)
-        password = Password(dto.password)
 
-        user = self.repository.find_by_email(email)
+        user = UserRepositoryValidator.user_found(self.repository.find_by_email(email))
 
-        if user is None:
-            raise UserRepositoryError(UserRepositoryTypeError.USER_NOT_FOUND)
-
-        if user.password.check_password(password.password):
+        if user.password.check_password(Password(dto.password).password):
             raise UserValidationError(UserValidationTypeError.INVALID_CREDENTIALS)
 
         return user

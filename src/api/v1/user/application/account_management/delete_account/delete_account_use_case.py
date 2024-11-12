@@ -8,6 +8,9 @@ from src.api.v1.user.domain.errors import (
     UserRepositoryTypeError,
 )
 from src.api.v1.user.domain.repositories import UserRepository
+from src.api.v1.user.domain.validators.user_repository_validator import (
+    UserRepositoryValidator,
+)
 
 
 class DeleteAccountUseCase:
@@ -15,16 +18,13 @@ class DeleteAccountUseCase:
         self.repository = repository
 
     def execute(self, dto: DeleteAccountDto) -> User:
-        uuid = Uuid(dto.uuid)
+        user = UserRepositoryValidator.user_found(
+            self.repository.find_by_id(Uuid(dto.uuid))
+        )
 
-        user = self.repository.find_by_id(str(uuid))
+        is_deleted, user_deleted = self.repository.delete(user)
 
-        if user is None:
-            raise UserRepositoryError(UserRepositoryTypeError.USER_NOT_FOUND)
-
-        is_deleted, user = self.repository.delete(user)
-
-        if not is_deleted or user is None:
+        if not is_deleted or user_deleted is None:
             raise UserRepositoryError(UserRepositoryTypeError.OPERATION_FAILED)
 
-        return user
+        return user_deleted

@@ -3,11 +3,10 @@ from src.api.v1.user.application.account_management.view_account.view_account_dt
     ViewAccountDto,
 )
 from src.api.v1.user.domain.entities import User
-from src.api.v1.user.domain.errors import (
-    UserRepositoryError,
-    UserRepositoryTypeError,
-)
 from src.api.v1.user.domain.repositories import UserRepository
+from src.api.v1.user.domain.validators.user_repository_validator import (
+    UserRepositoryValidator,
+)
 
 
 class ViewAccountUseCase:
@@ -15,11 +14,8 @@ class ViewAccountUseCase:
         self.repository = repository
 
     def execute(self, dto: ViewAccountDto) -> User:
-        uuid = Uuid(dto.uuid)
-
-        user = self.repository.find_by_id(str(uuid))
-
-        if user is None:
-            raise UserRepositoryError(UserRepositoryTypeError.USER_NOT_FOUND)
+        user = UserRepositoryValidator.user_found(
+            self.repository.find_by_id(Uuid(dto.uuid))
+        )
 
         return user
