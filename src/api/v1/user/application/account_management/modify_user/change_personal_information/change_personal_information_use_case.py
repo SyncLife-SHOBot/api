@@ -30,4 +30,4 @@ class ChangePersonalInformationUseCase:
         if not is_updated or user_updated is None:
             raise UserRepositoryError(UserRepositoryTypeError.OPERATION_FAILED)
 
-        return user
+        return user_updated
