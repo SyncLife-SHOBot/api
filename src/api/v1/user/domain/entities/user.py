@@ -23,6 +23,7 @@ class User:
     updated_at: Optional[datetime]
     inventory: List[Inventory] = field(default_factory=list)
 
+
     def __post_init__(self) -> None:
         UserValidator.validate_minimum_age(self.birth_date)
 
