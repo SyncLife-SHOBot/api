@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from src.api.v1.reminder.domain.entities import Reminder
 
 
@@ -13,13 +13,13 @@ class ReminderRepository(ABC):
         pass
 
     @abstractmethod
-    def save(self, reminder: Reminder) -> bool:
+    def save(self, reminder: Reminder) -> Tuple[bool, Optional[Reminder]]:
         pass
 
     @abstractmethod
-    def delete(self, reminder: Reminder) -> bool:
+    def delete(self, reminder: Reminder) -> Tuple[bool, Optional[Reminder]]:
         pass
 
     @abstractmethod
-    def update(self, reminder: Reminder) -> bool:
+    def update(self, reminder: Reminder) -> Tuple[bool, Optional[Reminder]]:
         pass

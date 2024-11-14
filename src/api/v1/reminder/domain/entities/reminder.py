@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, datetime
+from typing import Optional
 from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.reminder.domain.errors import (
     ReminderValidationError,
@@ -7,13 +8,15 @@ from src.api.v1.reminder.domain.errors import (
 )
 
 
-@dataclass(frozen=True)
+@dataclass
 class Reminder:
     uuid: Uuid
-    tittle: str
+    title: str
     content: str
-    creation_date: date
-    remind_date: date
+    creation_date: datetime
+    remind_date: datetime
+    updated_at: Optional[datetime]
+    is_deleted: bool
 
     def __post_init__(self):
         '''Valida que la fecha de recordatorio no sea pasada la fecha actual'''
@@ -24,14 +27,14 @@ class Reminder:
 
     def __repr__(self) -> str:
         return (
-            f"<Reminder(uuid={self.uuid}, tittle={self.tittle}, "
+            f"<Reminder(uuid={self.uuid}, title={self.title}, "
             f"content={self.content}, creation_date={self.creation_date}, "
             f"remind_date={self.remind_date})>"
         )
 
     def __str__(self) -> str:
         return (
-            f"Tittle({self.tittle}, "
+            f"Title({self.title}, "
             f"Content: {self.content}, UUID: {self.uuid}, "
             f"Creation Date: {self.creation_date}),"
             f"Remind Date: {self.remind_date}"
