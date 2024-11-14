@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 from typing import List
 
 if TYPE_CHECKING:
-    from src.api.v1.inventory.infrastructure.persistence.models.sqlmodel_inventory_model import (  # noqa: E501
+    from src.api.v1.inventory.infrastructure.persistence.models import (
         SqlModelInventoryModel,
     )
 
