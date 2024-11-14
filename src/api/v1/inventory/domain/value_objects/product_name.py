@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from src.api.v1.inventory.domain.validators.product_name_validator import (
+from src.api.v1.inventory.domain.validators import (
     ProductNameValidator,
 )
 

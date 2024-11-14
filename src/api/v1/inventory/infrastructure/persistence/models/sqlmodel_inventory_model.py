@@ -1,11 +1,11 @@
 from sqlmodel import SQLModel, Field, Relationship
 from datetime import date
-from src.api.v1.inventory.domain.entities.inventory import Inventory
+from src.api.v1.inventory.domain.entities import Inventory
 from src.api.v1.shared.domain.value_objects import Uuid
 from typing import Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (
+    from src.api.v1.user.infrastructure.persistence.models import (
         SqlModelUserModel,
     )
 

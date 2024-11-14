@@ -1,4 +1,4 @@
-from src.api.v1.inventory.domain.errors.inventoryItem_error import (
+from src.api.v1.inventory.domain.errors import (
     InventoryItemError,
     InventoryItemTypeError,
 )

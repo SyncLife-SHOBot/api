@@ -1,12 +1,10 @@
-__all__ = ["ViewItem", "ViewItemDTO"]
-
 from src.api.v1.shared.domain.value_objects import Uuid
-from src.api.v1.inventory.domain.entities.inventory import Inventory
-from src.api.v1.inventory.domain.repositories.inventory_repository import (
+from src.api.v1.inventory.domain.entities import Inventory
+from src.api.v1.inventory.domain.repositories import (
     InventoryRepository,
 )
-from src.api.v1.inventory.application.view.view_item_dto import ViewItemDTO
-from src.api.v1.inventory.domain.errors.inventoryItem_error import (
+from src.api.v1.inventory.application.view import ViewItemDTO
+from src.api.v1.inventory.domain.errors import (
     InventoryItemError,
     InventoryItemTypeError,
 )

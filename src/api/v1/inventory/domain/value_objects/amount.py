@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from src.api.v1.inventory.domain.validators.amount_validator import AmountValidator
+from src.api.v1.inventory.domain.validators import AmountValidator
 
 
 @dataclass(frozen=True)

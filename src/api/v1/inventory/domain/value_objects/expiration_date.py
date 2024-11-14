@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import date
-from src.api.v1.inventory.domain.validators.expiration_validator import (
+from src.api.v1.inventory.domain.validators import (
     ExpirationDateValidator,
 )
 

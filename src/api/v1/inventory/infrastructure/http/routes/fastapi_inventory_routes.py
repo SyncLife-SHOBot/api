@@ -1,39 +1,50 @@
-from fastapi import APIRouter
-from src.api.v1.inventory.infrastructure.http.controllers.fastapi_inventory_controller import (  # noqa: E501
+from fastapi import APIRouter, Depends
+
+from src.api.v1.inventory.infrastructure.http.controllers import (
     FastApiInventoryController,
 )
-from src.api.v1.inventory.infrastructure.http.dtos.pydantic_create_item_dto import (
-    PydanticCreateItemDto,
-)  # noqa: E501
-from src.api.v1.inventory.infrastructure.http.dtos.pydantic_update_item_dto import (
-    PydanticUpdateItemDto,
-)  # noqa: E501
-from src.api.v1.inventory.infrastructure.persistence.models.sqlmodel_inventory_model import (  # noqa: E501
-    SqlModelInventoryModel,
+
+from src.api.v1.inventory.infrastructure.http.dtos import (
+    PydanticUpdateItemResponseDto,
+    PydanticUpdateItemRequestDto,
+    PydanticCreateItemResponseDto,
+    PydanticCreateItemRequestDto,
+    PydanticViewItemResponseDto,
+    PydanticDeleteItemResponseDto,
 )
+
+from src.api.v1.user.infrastructure.http.services import InMemorySessionService
 
 router: APIRouter = APIRouter(prefix="/inventory", tags=["Inventory"])
 
 
-@router.post("/create", response_model=SqlModelInventoryModel)
+@router.post("/create", response_model=PydanticCreateItemResponseDto)
 async def create_inventory_item(
-    item_data: PydanticCreateItemDto,
-) -> SqlModelInventoryModel:
-    return await FastApiInventoryController.create(item_data)
+    dto: PydanticCreateItemRequestDto,
+    user_id: str = Depends(InMemorySessionService.validate_session_token),
+) -> PydanticCreateItemResponseDto:
+    return await FastApiInventoryController.create(dto, user_id)
 
 
-@router.get("/view/{inventory_id}", response_model=SqlModelInventoryModel)
-async def view_inventory_item(inventory_id: str) -> SqlModelInventoryModel:
-    return await FastApiInventoryController.view(inventory_id)
+@router.get("/view/{inventory_id}", response_model=PydanticViewItemResponseDto)
+async def view_inventory_item(
+    inventory_id: str,
+    user_id: str = Depends(InMemorySessionService.validate_session_token),
+) -> PydanticViewItemResponseDto:
+    return await FastApiInventoryController.view(inventory_id, user_id)
 
 
-@router.put("/update", response_model=SqlModelInventoryModel)
+@router.put("/update", response_model=PydanticUpdateItemResponseDto)
 async def update_inventory_item(
-    item_data: PydanticUpdateItemDto,
-) -> SqlModelInventoryModel:
-    return await FastApiInventoryController.update(item_data)
+    dto: PydanticUpdateItemRequestDto,
+    user_id: str = Depends(InMemorySessionService.validate_session_token),
+) -> PydanticUpdateItemResponseDto:
+    return await FastApiInventoryController.update(dto, user_id)
 
 
-@router.delete("/delete/{inventory_id}", response_model=bool)
-async def delete_inventory_item(inventory_id: str) -> bool:
-    return await FastApiInventoryController.delete(inventory_id)
+@router.delete("/delete/{inventory_id}", response_model=PydanticDeleteItemResponseDto)
+async def delete_inventory_item(
+    inventory_id: str,
+    user_id: str = Depends(InMemorySessionService.validate_session_token),
+) -> PydanticDeleteItemResponseDto:
+    return await FastApiInventoryController.delete(inventory_id, user_id)

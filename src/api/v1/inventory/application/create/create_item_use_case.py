@@ -1,9 +1,9 @@
-from src.api.v1.inventory.domain.entities.inventory import Inventory
-from src.api.v1.inventory.domain.repositories.inventory_repository import (
+from src.api.v1.inventory.domain.entities import Inventory
+from src.api.v1.inventory.domain.repositories import (
     InventoryRepository,
 )
-from src.api.v1.inventory.application.create.create_item_dto import CreateItemDto
-from src.api.v1.shared.domain.value_objects.uuid import Uuid
+from src.api.v1.inventory.application.create import CreateItemDto
+from src.api.v1.shared.domain.value_objects import Uuid
 
 
 class CreateItem:

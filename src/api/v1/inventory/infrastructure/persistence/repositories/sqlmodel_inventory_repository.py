@@ -1,11 +1,11 @@
 from src.api.v1.shared.domain.value_objects import Uuid
 from typing import List, Optional
 from sqlmodel import Session, select
-from src.api.v1.inventory.domain.repositories.inventory_repository import (
+from src.api.v1.inventory.domain.repositories import (
     InventoryRepository,
 )
-from src.api.v1.inventory.domain.entities.inventory import Inventory
-from src.api.v1.inventory.infrastructure.persistence.models.sqlmodel_inventory_model import (  # noqa: E501
+from src.api.v1.inventory.domain.entities import Inventory
+from src.api.v1.inventory.infrastructure.persistence.models import (
     SqlModelInventoryModel,
 )
 
