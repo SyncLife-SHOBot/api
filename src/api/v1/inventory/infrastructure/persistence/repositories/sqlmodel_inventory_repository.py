@@ -1,11 +1,12 @@
+from datetime import datetime
 from src.api.v1.shared.domain.value_objects import Uuid
-from typing import List, Optional
-from sqlmodel import Session, select
-from src.api.v1.inventory.domain.repositories import (
+from typing import List, Optional, Tuple
+from sqlmodel import Session, select, not_
+from src.api.v1.inventory.domain.repositories.inventory_repository import (
     InventoryRepository,
 )
-from src.api.v1.inventory.domain.entities import Inventory
-from src.api.v1.inventory.infrastructure.persistence.models import (
+from src.api.v1.inventory.domain.entities.inventory import Inventory
+from src.api.v1.inventory.infrastructure.persistence.models.sqlmodel_inventory_model import (  # noqa: E501
     SqlModelInventoryModel,
 )
 
@@ -14,35 +15,94 @@ class SQLModelInventoryRepository(InventoryRepository):
     def __init__(self, session: Session):
         self.session = session
 
-    def find_all(self) -> List[Inventory]:
-        statement = select(SqlModelInventoryModel)
-        items = self.session.exec(statement).all()
+    def find_all(self, include_deleted: bool = False) -> List[Inventory]:
+
+        query = (
+            select(SqlModelInventoryModel)
+            if include_deleted
+            else select(SqlModelInventoryModel).where(
+                not_(SqlModelInventoryModel.is_deleted)
+            )
+        )
+        items = self.session.exec(query).all()
         return [item.to_entity() for item in items]
 
-    def find_by_id(self, id: Uuid) -> Optional[Inventory]:
-        item = self.session.get(SqlModelInventoryModel, str(id))
+    def find_by_id(
+        self, id: Uuid, include_deleted: bool = False
+    ) -> Optional[Inventory]:
+        query = (
+            select(SqlModelInventoryModel).where(SqlModelInventoryModel.id == str(id))
+            if include_deleted
+            else (
+                select(SqlModelInventoryModel)
+                .where(SqlModelInventoryModel.id == str(id))
+                .where(not_(SqlModelInventoryModel.is_deleted))
+            )
+        )
+        item = self.session.exec(query).first()
         return item.to_entity() if item else None
 
+    def find_all_by_user_id(
+        self, user_id: Uuid, include_deleted: bool = False
+    ) -> List[Inventory]:
+        query = select(SqlModelInventoryModel).where(
+            SqlModelInventoryModel.user_id == str(user_id)
+        )
+
+        if not include_deleted:
+            query = query.where(not_(SqlModelInventoryModel.is_deleted))
+
+        items = self.session.exec(query).all()
+        return [item.to_entity() for item in items]
+
     def save(self, item: Inventory) -> bool:
-        print("DEBUG - Entered save method")
         item_model = SqlModelInventoryModel.from_entity(item)
         self.session.add(item_model)
         self.session.commit()
         return True
 
-    def update(self, item: Inventory) -> bool:
-        existing_item = self.session.get(SqlModelInventoryModel, str(item.id))
-        if existing_item:
-            for key, value in SqlModelInventoryModel.from_entity(item).dict().items():
-                setattr(existing_item, key, value)
-            self.session.commit()
-            return True
-        return False
+    def update(self, item: Inventory) -> Tuple[bool, Optional[Inventory]]:
+        existing_item = self.session.exec(
+            select(SqlModelInventoryModel)
+            .where(SqlModelInventoryModel.id == str(item.id))
+            .where(not_(SqlModelInventoryModel.is_deleted))
+        ).first()
 
-    def delete(self, item: Inventory) -> bool:
-        existing_item = self.session.get(SqlModelInventoryModel, str(item.id))
-        if existing_item:
-            self.session.delete(existing_item)
-            self.session.commit()
-            return True
-        return False
+        if not existing_item:
+            return (False, None)
+
+        updates = {
+            "product_name": item.product_name,
+            "amount": item.amount,
+            "expiration_date": item.expiration_date,
+            "updated_at": datetime.now(),
+        }
+        for field, value in updates.items():
+            if getattr(existing_item, field) != value:
+                setattr(existing_item, field, value)
+
+        self.session.add(existing_item)
+        self.session.commit()
+        self.session.refresh(existing_item)
+
+        result = (True, existing_item.to_entity())
+        print(f"update() result: {result}")  # Imprime el resultado antes de devolverlo
+        return result
+
+    def delete(self, item: Inventory) -> Tuple[bool, Optional[Inventory]]:
+        existing_item = self.session.exec(
+            select(SqlModelInventoryModel)
+            .where(SqlModelInventoryModel.id == str(item.id))
+            .where(not_(SqlModelInventoryModel.is_deleted))
+        ).first()
+
+        if not existing_item:
+            return (False, None)
+
+        existing_item.is_deleted = True
+        existing_item.updated_at = datetime.now()
+        self.session.add(existing_item)
+        self.session.commit()
+        self.session.refresh(existing_item)
+
+        return (True, existing_item.to_entity())

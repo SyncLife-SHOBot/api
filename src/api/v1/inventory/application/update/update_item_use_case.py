@@ -1,35 +1,41 @@
+from typing import Optional
 from src.api.v1.shared.domain.value_objects import Uuid
-from src.api.v1.inventory.domain.entities import Inventory
-from src.api.v1.inventory.domain.repositories import (
+from src.api.v1.inventory.domain.repositories.inventory_repository import (
     InventoryRepository,
 )
-from src.api.v1.inventory.application.update import UpdateItemDto
-from src.api.v1.inventory.domain.errors import (
-    InventoryItemTypeError,
-    InventoryItemError,
+from src.api.v1.inventory.application.update.update_item_dto import UpdateItemDto
+from src.api.v1.inventory.domain.validators.inventory_repository_validator import (
+    InventoryRepositoryValidator,
 )
+from src.api.v1.inventory.domain.errors import (
+    InventoryItemError,
+    InventoryItemTypeError,
+)
+
+from src.api.v1.inventory.domain.entities.inventory import Inventory
 
 
 class UpdateItem:
-    def __init__(self, repository: InventoryRepository):
+    def __init__(self, repository: InventoryRepository) -> None:
         self.repository = repository
 
-    def execute(self, dto: UpdateItemDto) -> None:
-        inventory_id = (
-            Uuid(dto.inventory_id)
-            if isinstance(dto.inventory_id, str)
-            else dto.inventory_id
-        )
-        inventory_item = self.repository.find_by_id(inventory_id)
-        if not inventory_item:
-            raise InventoryItemError(InventoryItemTypeError.ITEM_NOT_FOUND)
-
-        update_inventory_item = Inventory(
-            id=inventory_item.id,
-            user_id=inventory_item.user_id,
-            product_name=str(dto.product_name),
-            amount=int(dto.amount),
-            expiration_date=dto.expiration_date,
+    # Valida que el inventario existe
+    def execute(self, dto: UpdateItemDto) -> Inventory:
+        inventory_item = InventoryRepositoryValidator.inventory_found(
+            self.repository.find_by_id(Uuid(dto.inventory_id))
         )
 
-        self.repository.update(update_inventory_item)
+        # Actualiza item
+
+        inventory_item.product_name = str(dto.product_name)
+        inventory_item.amount = int(dto.amount)
+        inventory_item.expiration_date = dto.expiration_date
+
+        is_updated: bool
+        updated_item: Optional[Inventory]
+        is_updated, updated_item = self.repository.update(inventory_item)
+
+        if not is_updated or updated_item is None:
+            raise InventoryItemError(InventoryItemTypeError.OPERATION_FAILED)
+
+        return updated_item

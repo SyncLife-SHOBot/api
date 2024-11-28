@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from src.api.v1.inventory.application.view import ViewItemDTO
+from src.api.v1.inventory.application.view.view_item_dto import ViewItemDTO
 
 
 class PydanticViewItemRequestDto(BaseModel):

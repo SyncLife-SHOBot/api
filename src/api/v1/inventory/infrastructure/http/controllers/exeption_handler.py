@@ -12,10 +12,8 @@ def handle_exceptions(func: Callable[..., Awaitable[T]]) -> Callable[..., Awaita
     async def wrapper(*args: Any, **kwargs: Any) -> T:
         try:
             return await func(*args, **kwargs)
-        except InventoryItemError as e:
+        except (InventoryItemError, SharedError) as e:
             raise HTTPException(status_code=404, detail=str(e))
-        except SharedError as e:
-            raise HTTPException(status_code=400, detail=str(e))
         except Exception as e:
             raise HTTPException(
                 status_code=500, detail=f"Error interno del servidor: {e}"

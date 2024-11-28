@@ -8,8 +8,10 @@ from dotenv import load_dotenv
 import os
 
 from sqlmodel import SQLModel
-from src.api.v1.user.infrastructure.persistence.models import SqlModelUserModel
-from src.api.v1.inventory.infrastructure.persistence.models import (
+from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (  # noqa: E501
+    SqlModelUserModel,
+)
+from src.api.v1.inventory.infrastructure.persistence.models.sqlmodel_inventory_model import (  # noqa: E501
     SqlModelInventoryModel,
 )
 

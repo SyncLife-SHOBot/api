@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from src.api.v1.inventory.application.delete import DeleteItemDTO
+from src.api.v1.inventory.application.delete.delete_item_dto import DeleteItemDTO
 
 
 class PydanticDeleteItemRequestDto(BaseModel):

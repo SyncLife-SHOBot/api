@@ -1,4 +1,4 @@
-from src.api.v1.user.infrastructure.persistence.repositories import (
+from src.api.v1.user.infrastructure.persistence.repositories.sqlmodel_user_repository import (  # noqa: E501
     SqlModelUserRepository,
 )
 from src.api.v1.user.infrastructure.http.dtos.register import (
@@ -9,7 +9,9 @@ from src.api.v1.user.infrastructure.http.dtos.login import (
     PydanticLoginRequestDto,
     PydanticLoginResponseDto,
 )
-from src.api.v1.user.infrastructure.persistence.models import SqlModelUserModel
+from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (
+    SqlModelUserModel,
+)
 from src.api.v1.user.application.authentication.register import RegisterUseCase
 from src.api.v1.user.application.authentication.login import LoginUseCase
 from src.api.v1.user.infrastructure.http.services import InMemorySessionService

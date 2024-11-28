@@ -1,14 +1,16 @@
-__all__ = ["DeleteItem", "DeleteItemDTO"]
-
+from typing import Optional
 from src.api.v1.shared.domain.value_objects import Uuid
-from src.api.v1.inventory.domain.repositories import (
+from src.api.v1.inventory.domain.repositories.inventory_repository import (
     InventoryRepository,
 )
-from src.api.v1.inventory.domain.entities import Inventory
-from src.api.v1.inventory.application.delete import DeleteItemDTO
+from src.api.v1.inventory.domain.entities.inventory import Inventory
+from src.api.v1.inventory.application.delete.delete_item_dto import DeleteItemDTO
 from src.api.v1.inventory.domain.errors import (
     InventoryItemError,
     InventoryItemTypeError,
+)
+from src.api.v1.inventory.domain.validators.inventory_repository_validator import (
+    InventoryRepositoryValidator,
 )
 
 
@@ -17,14 +19,21 @@ class DeleteItem:
         self.repository = repository
 
     def execute(self, dto: DeleteItemDTO) -> Inventory:
-        inventory_id = (
-            Uuid(dto.inventory_id)
-            if isinstance(dto.inventory_id, str)
-            else dto.inventory_id
+        # Valida que el inventario existe
+        inventory_item = InventoryRepositoryValidator.inventory_found(
+            self.repository.find_by_id(Uuid(dto.inventory_id))
         )
-        inventory_item = self.repository.find_by_id(inventory_id)
-        if not inventory_item:
-            raise ValueError(InventoryItemError(InventoryItemTypeError.ITEM_NOT_FOUND))
+        # Valida que el usuario es propietario del inventario
+        InventoryRepositoryValidator.user_owns_inventory(
+            self.repository, inventory_item.user_id, Uuid(dto.inventory_id)
+        )
 
-        self.repository.delete(inventory_item)
-        return inventory_item
+        # Elimina (logicamente) el inventario
+        is_deleted: bool
+        deleted_item: Optional[Inventory]
+        is_deleted, deleted_item = self.repository.delete(inventory_item)
+
+        if not is_deleted or deleted_item is None:
+            raise InventoryItemError(InventoryItemTypeError.OPERATION_FAILED)
+
+        return deleted_item

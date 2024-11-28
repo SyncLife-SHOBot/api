@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from src.api.v1.user.infrastructure.http.controllers import (
-    FastApiAuthenticationController,
     FastApiAccountManagementController,
+    FastApiAuthenticationController,
 )
 from src.api.v1.user.infrastructure.http.dtos import (
     PydanticRegisterRequestDto,

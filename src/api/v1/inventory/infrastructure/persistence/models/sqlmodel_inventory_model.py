@@ -1,13 +1,11 @@
 from sqlmodel import SQLModel, Field, Relationship
 from datetime import date
-from src.api.v1.inventory.domain.entities import Inventory
 from src.api.v1.shared.domain.value_objects import Uuid
-from typing import Optional, TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from src.api.v1.user.infrastructure.persistence.models import (
-        SqlModelUserModel,
-    )
+from typing import Optional
+from src.api.v1.inventory.domain.entities.inventory import Inventory
+from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (
+    SqlModelUserModel,
+)
 
 
 class SqlModelInventoryModel(SQLModel, table=True):
@@ -21,11 +19,11 @@ class SqlModelInventoryModel(SQLModel, table=True):
     is_deleted: bool = Field(default=False)
     created_at: date = Field(default_factory=date.today)
     updated_at: Optional[date] = Field(default=None)
-
     user: "SqlModelUserModel" = Relationship(back_populates="inventory_items")
 
     @classmethod
-    def from_entity(cls, entity: Inventory) -> "SqlModelInventoryModel":
+    def from_entity(cls, entity: "Inventory") -> "SqlModelInventoryModel":
+
         return cls(
             id=str(entity.id),
             user_id=str(entity.user_id),
@@ -35,7 +33,7 @@ class SqlModelInventoryModel(SQLModel, table=True):
             is_deleted=False,
         )
 
-    def to_entity(self) -> Inventory:
+    def to_entity(self) -> "Inventory":
         return Inventory(
             id=Uuid(self.id),
             user_id=Uuid(self.user_id),

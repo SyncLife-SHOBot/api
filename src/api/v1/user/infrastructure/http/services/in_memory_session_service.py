@@ -6,7 +6,7 @@ from src.api.v1.shared.domain.value_objects import Uuid
 
 class InMemorySessionService:
     _sessions: Dict[str, Dict[str, Any]] = {}
-    _session_duration = timedelta(hours=1)
+    _session_duration = timedelta(hours=10000000)
 
     @classmethod
     def create_session(cls, user_id: str) -> str:

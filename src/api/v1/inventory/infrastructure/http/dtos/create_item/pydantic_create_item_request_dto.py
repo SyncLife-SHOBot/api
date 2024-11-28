@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import date
-from src.api.v1.inventory.application.create import CreateItemDto
+from src.api.v1.inventory.application.create.create_item_dto import CreateItemDto
 
 
 class PydanticCreateItemRequestDto(BaseModel):

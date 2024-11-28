@@ -1,6 +1,7 @@
+from typing import List
 from fastapi import APIRouter, Depends
 
-from src.api.v1.inventory.infrastructure.http.controllers import (
+from src.api.v1.inventory.infrastructure.http.controllers.fastapi_inventory_controller import (  # noqa: E501
     FastApiInventoryController,
 )
 
@@ -18,7 +19,6 @@ from src.api.v1.user.infrastructure.http.services import InMemorySessionService
 router: APIRouter = APIRouter(prefix="/inventory", tags=["Inventory"])
 
 
-
 @router.post("/create", response_model=PydanticCreateItemResponseDto)
 async def create_inventory_item(
     dto: PydanticCreateItemRequestDto,
@@ -33,6 +33,13 @@ async def view_inventory_item(
     user_id: str = Depends(InMemorySessionService.validate_session_token),
 ) -> PydanticViewItemResponseDto:
     return await FastApiInventoryController.view(inventory_id, user_id)
+
+
+@router.get("/view_all", response_model=List[PydanticViewItemResponseDto])
+async def view_all_inventory_items(
+    user_id: str = Depends(InMemorySessionService.validate_session_token),
+) -> List[PydanticViewItemResponseDto]:
+    return await FastApiInventoryController.view_all(user_id)
 
 
 @router.put("/update", response_model=PydanticUpdateItemResponseDto)
