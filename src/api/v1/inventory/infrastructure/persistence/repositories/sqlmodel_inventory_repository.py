@@ -11,15 +11,15 @@ from src.api.v1.inventory.infrastructure.persistence.models.sqlmodel_inventory_m
 )
 from src.api.v1.shared.infrastructure.persistence import get_db_connection
 
+
 class SQLModelInventoryRepository(InventoryRepository):
-    def __init__(self, session: Session):
-        self.session = session
+    def __init__(self, db_connection: Session) -> None:
+        self.db_connection = db_connection
 
     @staticmethod
     def get_repository() -> "SQLModelInventoryRepository":
         with get_db_connection() as db_connection:
             return SQLModelInventoryRepository(db_connection=db_connection)
-
 
     def find_all(self, include_deleted: bool = False) -> List[Inventory]:
         query = (
@@ -29,7 +29,7 @@ class SQLModelInventoryRepository(InventoryRepository):
                 not_(SqlModelInventoryModel.is_deleted)
             )
         )
-        items = self.session.exec(query).all()
+        items = self.db_connection.exec(query).all()
         return [item.to_entity() for item in items]
 
     def find_by_id(
@@ -44,7 +44,7 @@ class SQLModelInventoryRepository(InventoryRepository):
                 .where(not_(SqlModelInventoryModel.is_deleted))
             )
         )
-        item = self.session.exec(query).first()
+        item = self.db_connection.exec(query).first()
         return item.to_entity() if item else None
 
     def find_all_by_user_id(
@@ -57,17 +57,17 @@ class SQLModelInventoryRepository(InventoryRepository):
         if not include_deleted:
             query = query.where(not_(SqlModelInventoryModel.is_deleted))
 
-        items = self.session.exec(query).all()
+        items = self.db_connection.exec(query).all()
         return [item.to_entity() for item in items]
 
     def save(self, item: Inventory) -> bool:
         item_model = SqlModelInventoryModel.from_entity(item)
-        self.session.add(item_model)
-        self.session.commit()
+        self.db_connection.add(item_model)
+        self.db_connection.commit()
         return True
 
     def update(self, item: Inventory) -> Tuple[bool, Optional[Inventory]]:
-        existing_item = self.session.exec(
+        existing_item = self.db_connection.exec(
             select(SqlModelInventoryModel)
             .where(SqlModelInventoryModel.id == str(item.id))
             .where(not_(SqlModelInventoryModel.is_deleted))
@@ -86,16 +86,16 @@ class SQLModelInventoryRepository(InventoryRepository):
             if getattr(existing_item, field) != value:
                 setattr(existing_item, field, value)
 
-        self.session.add(existing_item)
-        self.session.commit()
-        self.session.refresh(existing_item)
+        self.db_connection.add(existing_item)
+        self.db_connection.commit()
+        self.db_connection.refresh(existing_item)
 
         result = (True, existing_item.to_entity())
         print(f"update() result: {result}")  # Imprime el resultado antes de devolverlo
         return result
 
     def delete(self, item: Inventory) -> Tuple[bool, Optional[Inventory]]:
-        existing_item = self.session.exec(
+        existing_item = self.db_connection.exec(
             select(SqlModelInventoryModel)
             .where(SqlModelInventoryModel.id == str(item.id))
             .where(not_(SqlModelInventoryModel.is_deleted))
@@ -106,8 +106,8 @@ class SQLModelInventoryRepository(InventoryRepository):
 
         existing_item.is_deleted = True
         existing_item.updated_at = datetime.now()
-        self.session.add(existing_item)
-        self.session.commit()
-        self.session.refresh(existing_item)
+        self.db_connection.add(existing_item)
+        self.db_connection.commit()
+        self.db_connection.refresh(existing_item)
 
         return (True, existing_item.to_entity())
