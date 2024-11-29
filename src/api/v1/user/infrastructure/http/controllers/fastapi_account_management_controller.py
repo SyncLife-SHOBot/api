@@ -17,8 +17,10 @@ from src.api.v1.user.infrastructure.http.dtos import (
 from src.api.v1.user.infrastructure.http.services.in_memory_session_service import (
     InMemorySessionService,
 )
-from src.api.v1.user.infrastructure.persistence.models import SqlModelUserModel
-from src.api.v1.user.infrastructure.persistence.repositories import (
+from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (
+    SqlModelUserModel,
+)
+from src.api.v1.user.infrastructure.persistence.repositories.sqlmodel_user_repository import (  # noqa: E501
     SqlModelUserRepository,
 )
 from src.api.v1.user.application import (
