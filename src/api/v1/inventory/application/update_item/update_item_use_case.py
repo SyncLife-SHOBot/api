@@ -1,9 +1,8 @@
-from typing import Optional
 from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.inventory.domain.repositories.inventory_repository import (
     InventoryRepository,
 )
-from src.api.v1.inventory.application.update.update_item_dto import UpdateItemDto
+from src.api.v1.inventory.application.update_item.update_item_dto import UpdateItemDto
 from src.api.v1.inventory.domain.validators.inventory_repository_validator import (
     InventoryRepositoryValidator,
 )
@@ -15,7 +14,7 @@ from src.api.v1.inventory.domain.errors import (
 from src.api.v1.inventory.domain.entities.inventory import Inventory
 
 
-class UpdateItem:
+class UpdateItemUseCase:
     def __init__(self, repository: InventoryRepository) -> None:
         self.repository = repository
 
@@ -31,8 +30,6 @@ class UpdateItem:
         inventory_item.amount = int(dto.amount)
         inventory_item.expiration_date = dto.expiration_date
 
-        is_updated: bool
-        updated_item: Optional[Inventory]
         is_updated, updated_item = self.repository.update(inventory_item)
 
         if not is_updated or updated_item is None:

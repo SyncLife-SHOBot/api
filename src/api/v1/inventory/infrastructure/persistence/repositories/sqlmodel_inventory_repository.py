@@ -9,14 +9,19 @@ from src.api.v1.inventory.domain.entities.inventory import Inventory
 from src.api.v1.inventory.infrastructure.persistence.models.sqlmodel_inventory_model import (  # noqa: E501
     SqlModelInventoryModel,
 )
-
+from src.api.v1.shared.infrastructure.persistence import get_db_connection
 
 class SQLModelInventoryRepository(InventoryRepository):
     def __init__(self, session: Session):
         self.session = session
 
-    def find_all(self, include_deleted: bool = False) -> List[Inventory]:
+    @staticmethod
+    def get_repository() -> "SQLModelInventoryRepository":
+        with get_db_connection() as db_connection:
+            return SQLModelInventoryRepository(db_connection=db_connection)
 
+
+    def find_all(self, include_deleted: bool = False) -> List[Inventory]:
         query = (
             select(SqlModelInventoryModel)
             if include_deleted

@@ -22,14 +22,14 @@ from src.api.v1.inventory.infrastructure.http.dtos import (
     PydanticDeleteItemResponseDto,
     PydanticViewItemResponseDto,
 )
-from src.api.v1.inventory.application.create import CreateItem
-from src.api.v1.inventory.application.delete import DeleteItem
-from src.api.v1.inventory.application.delete.delete_item_dto import DeleteItemDTO
-from src.api.v1.inventory.application.update import UpdateItem
-from src.api.v1.inventory.application.view import ViewItem
-from src.api.v1.inventory.application.view.view_item_dto import ViewItemDTO
-from src.api.v1.inventory.application.view_all import ViewAllInventoryItems
-from src.api.v1.inventory.application.view_all.view_all_item_dto import (
+from src.api.v1.inventory.application.create_item import CreateItemUseCase
+from src.api.v1.inventory.application.delete_item import DeleteItemUseCase
+from src.api.v1.inventory.application.delete_item.delete_item_dto import DeleteItemDTO
+from src.api.v1.inventory.application.update_item import UpdateItemUseCase
+from src.api.v1.inventory.application.view_item import ViewItemUseCase
+from src.api.v1.inventory.application.view_item.view_item_dto import ViewItemDTO
+from src.api.v1.inventory.application.view_all_items import ViewAllInventoryItemsUseCase
+from src.api.v1.inventory.application.view_all_items.view_all_item_dto import (
     ViewAllInventoryItemsDTO,
 )
 from src.api.v1.shared.infrastructure.persistence.sqlmodel_connection import get_session
@@ -45,16 +45,16 @@ class FastApiInventoryController:
     async def create(
         item_data: PydanticCreateItemRequestDto, user_id: str
     ) -> PydanticCreateItemResponseDto:
-        with get_session() as session:
-            repo = SQLModelInventoryRepository(session=session)
-            user_repo = SqlModelUserRepository(db_connection=session)
+            repo = SQLModelInventoryRepository.get_repository()
+            user_repo = SqlModelUserRepository.get_repository()
             InMemorySessionService.validate_permission(
                 Uuid(user_id), Uuid(item_data.user_id)
             )
 
-            use_case = CreateItem(repo, user_repo)
+            use_case = CreateItemUseCase(repo, user_repo)
             dto = item_data.to_application()
             item = use_case.execute(dto)
+
             return PydanticCreateItemResponseDto(
                 item=SqlModelInventoryModel.from_entity(item)
             )
@@ -64,8 +64,7 @@ class FastApiInventoryController:
     async def update(
         item_data: PydanticUpdateItemRequestDto, user_id: str
     ) -> PydanticUpdateItemResponseDto:
-        with get_session() as session:
-            repo = SQLModelInventoryRepository(session=session)
+            repo = SQLModelInventoryRepository.get_repository()
             inventory_item = repo.find_by_id(Uuid(item_data.inventory_id))
             if not inventory_item:
                 raise HTTPException(
@@ -76,7 +75,7 @@ class FastApiInventoryController:
                 Uuid(user_id), inventory_item.user_id
             )
 
-            use_case = UpdateItem(repo)
+            use_case = UpdateItemUseCase(repo)
             dto = item_data.to_application()
             use_case.execute(dto)
             updated_item = repo.find_by_id(Uuid(dto.inventory_id))
@@ -92,8 +91,7 @@ class FastApiInventoryController:
     @staticmethod
     @handle_exceptions
     async def delete(inventory_id: str, user_id: str) -> PydanticDeleteItemResponseDto:
-        with get_session() as session:
-            repo = SQLModelInventoryRepository(session=session)
+            repo = SQLModelInventoryRepository.get_repository()
             inventory_item = repo.find_by_id(Uuid(inventory_id))
             if not inventory_item:
                 raise HTTPException(
@@ -104,7 +102,7 @@ class FastApiInventoryController:
                 Uuid(user_id), inventory_item.user_id
             )
 
-            use_case = DeleteItem(repo)
+            use_case = DeleteItemUseCase(repo)
             dto = DeleteItemDTO(inventory_id=inventory_id)
             deleted_item = use_case.execute(dto)
             return PydanticDeleteItemResponseDto(
@@ -114,8 +112,7 @@ class FastApiInventoryController:
     @staticmethod
     @handle_exceptions
     async def view(inventory_id: str, user_id: str) -> PydanticViewItemResponseDto:
-        with get_session() as session:
-            repo = SQLModelInventoryRepository(session=session)
+            repo = SQLModelInventoryRepository.get_repository()
             inventory_item = repo.find_by_id(Uuid(inventory_id))
             if not inventory_item:
                 raise HTTPException(
@@ -126,7 +123,7 @@ class FastApiInventoryController:
                 Uuid(user_id), inventory_item.user_id
             )
 
-            use_case = ViewItem(repo)
+            use_case = ViewItemUseCase(repo)
             dto = ViewItemDTO(inventory_id=inventory_id)
             item = use_case.execute(dto)
             return PydanticViewItemResponseDto(
@@ -135,9 +132,8 @@ class FastApiInventoryController:
 
     @staticmethod
     async def view_all(user_id: str) -> List[PydanticViewItemResponseDto]:
-        with get_session() as session:
-            repo = SQLModelInventoryRepository(session=session)
-            use_case = ViewAllInventoryItems(repo)
+            repo = SQLModelInventoryRepository.get_repository()
+            use_case = ViewAllInventoryItemsUseCase(repo)
 
             dto = ViewAllInventoryItemsDTO(user_id=Uuid(user_id))
             inventory_items = use_case.execute(dto)

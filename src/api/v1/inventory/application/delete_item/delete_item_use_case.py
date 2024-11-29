@@ -1,10 +1,9 @@
-from typing import Optional
 from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.inventory.domain.repositories.inventory_repository import (
     InventoryRepository,
 )
 from src.api.v1.inventory.domain.entities.inventory import Inventory
-from src.api.v1.inventory.application.delete.delete_item_dto import DeleteItemDTO
+from src.api.v1.inventory.application.delete_item.delete_item_dto import DeleteItemDTO
 from src.api.v1.inventory.domain.errors import (
     InventoryItemError,
     InventoryItemTypeError,
@@ -14,7 +13,7 @@ from src.api.v1.inventory.domain.validators.inventory_repository_validator impor
 )
 
 
-class DeleteItem:
+class DeleteItemUseCase:
     def __init__(self, repository: InventoryRepository):
         self.repository = repository
 
@@ -29,8 +28,6 @@ class DeleteItem:
         )
 
         # Elimina (logicamente) el inventario
-        is_deleted: bool
-        deleted_item: Optional[Inventory]
         is_deleted, deleted_item = self.repository.delete(inventory_item)
 
         if not is_deleted or deleted_item is None:

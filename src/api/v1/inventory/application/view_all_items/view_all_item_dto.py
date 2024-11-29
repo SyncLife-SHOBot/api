@@ -1,6 +1,7 @@
+from dataclasses import dataclass
 from src.api.v1.shared.domain.value_objects import Uuid
 
 
+@dataclass
 class ViewAllInventoryItemsDTO:
-    def __init__(self, user_id: Uuid):
-        self.user_id = user_id
+    user_id: Uuid

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import date
-from src.api.v1.inventory.application.update.update_item_dto import UpdateItemDto
+from src.api.v1.inventory.application.update_item.update_item_dto import UpdateItemDto
 
 
 class PydanticUpdateItemRequestDto(BaseModel):
