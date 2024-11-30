@@ -14,9 +14,12 @@ from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model impor
 from src.api.v1.inventory.infrastructure.persistence.models.sqlmodel_inventory_model import (  # noqa: E501
     SqlModelInventoryModel,
 )
+from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_notes_model import (
+    SqlModelNotesModel,
+)
 
 
-models = [SqlModelUserModel, SqlModelInventoryModel]
+models = [SqlModelUserModel, SqlModelInventoryModel, SqlModelNotesModel]
 
 # Cargar variables de entorno
 load_dotenv()
