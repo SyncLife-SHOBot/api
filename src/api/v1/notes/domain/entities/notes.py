@@ -11,6 +11,7 @@ class Notes:
     user_id: Uuid
     title: str
     content: str
+    is_deleted: bool
     created_at: datetime = datetime.now()
     updated_at: Optional[datetime] = None
 

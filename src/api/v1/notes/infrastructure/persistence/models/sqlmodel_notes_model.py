@@ -38,6 +38,7 @@ class SqlModelNotesModel(SQLModel, table=True):
             user_id=Uuid(self.user_id),
             title=self.title,
             content=self.content,
+            is_deleted=self.is_deleted,
             created_at=self.created_at,
             updated_at=self.updated_at,
         )

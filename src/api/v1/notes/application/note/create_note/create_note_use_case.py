@@ -34,6 +34,7 @@ class CreateNoteUseCase:
             user_id=Uuid(dto.user_id),
             title=dto.title.strip(),
             content=dto.content.strip(),
+            is_deleted=False,
         )
 
         """
