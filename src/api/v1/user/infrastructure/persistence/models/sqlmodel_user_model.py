@@ -18,6 +18,9 @@ if TYPE_CHECKING:
     from src.api.v1.inventory.infrastructure.persistence.models.sqlmodel_inventory_model import (  # noqa: E501
         SqlModelInventoryModel,
     )
+    from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_notes_model import (  # noqa: E501
+        SqlModelNotesModel,
+    )
 
 
 class SqlModelUserModel(SQLModel, table=True):
@@ -38,6 +41,7 @@ class SqlModelUserModel(SQLModel, table=True):
     inventory_items: Mapped[List["SqlModelInventoryModel"]] = Relationship(
         back_populates="user"
     )
+    notes: Mapped[List["SqlModelNotesModel"]] = Relationship(back_populates="user")
 
     @classmethod
     def from_entity(cls, entity: User) -> "SqlModelUserModel":
