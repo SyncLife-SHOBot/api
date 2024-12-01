@@ -1,10 +1,12 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import List
 from datetime import date, datetime
 from typing import Optional
 from src.api.v1.user.domain.validators.user_validator import UserValidator
 from src.api.v1.user.domain.value_objects import Email, FullName, Password
 from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.domain.value_objects.phone import Phone
+from src.api.v1.inventory.domain.entities.inventory import Inventory
 
 
 @dataclass
@@ -18,6 +20,7 @@ class User:
     is_deleted: bool
     created_at: datetime
     updated_at: Optional[datetime]
+    inventory: List[Inventory] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         UserValidator.validate_minimum_age(self.birth_date)
@@ -30,5 +33,6 @@ class User:
             f"User({self.full_name.get_full_name()}, "
             f"Email: {self.email}, UUID: {self.uuid}, "
             f"Birth Date: {self.birth_date}),"
-            f"Phone: {self.phone}"
+            f"Phone: {self.phone},"
+            f"Inventory Products: {len(self.inventory)}"
         )

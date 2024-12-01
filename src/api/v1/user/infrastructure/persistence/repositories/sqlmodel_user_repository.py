@@ -5,7 +5,9 @@ from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.domain.repositories import UserRepository
 from src.api.v1.user.domain.entities import User
 from src.api.v1.user.domain.value_objects import Email
-from src.api.v1.user.infrastructure.persistence.models import SqlModelUserModel
+from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (
+    SqlModelUserModel,
+)
 from src.api.v1.shared.infrastructure.persistence import get_db_connection
 
 
