@@ -1,4 +1,4 @@
-from src.api.v1.notes.infrastructure.http.controllers.fastapi_notes_controller import (
+from src.api.v1.notes.infrastructure.http.controllers.notes.fastapi_notes_controller import (  # noqa: E501
     FastApiNotesController,
 )
 
@@ -9,6 +9,11 @@ from src.api.v1.notes.infrastructure.http.dtos.notes import (
     PydanticUpdateNotesResponseDto,
     PydanticViewNotesResponseDto,
     PydanticDeleteNotesResponseDto,
+    PydanticAddTagToNoteRequestDto,
+    PydanticAddTagToNoteResponseDto,
+    PydanticFilterNotesByTagResponseDto,
+    PydanticRemoveTagResponseDto,
+    PydanticRemoveTagRequestDto,
 )
 from src.api.v1.user.infrastructure.http.services import InMemorySessionService
 from typing import List
@@ -53,3 +58,27 @@ async def delete_note(
     note_id: str, user_id: str = Depends(InMemorySessionService.validate_session_token)
 ) -> PydanticDeleteNotesResponseDto:
     return await FastApiNotesController.delete(note_id, user_id)
+
+
+@router.post("/add_tag", response_model=PydanticAddTagToNoteResponseDto)
+async def add_tag_to_note(
+    dto: PydanticAddTagToNoteRequestDto,
+    user_id: str = Depends(InMemorySessionService.validate_session_token),
+) -> PydanticAddTagToNoteResponseDto:
+    return await FastApiNotesController.add_tag_to_note(dto, user_id)
+
+
+@router.get("/filter_by_tag", response_model=List[PydanticFilterNotesByTagResponseDto])
+async def filter_notes_by_tag(
+    tag_id: str,
+    user_id: str = Depends(InMemorySessionService.validate_session_token),
+) -> List[PydanticFilterNotesByTagResponseDto]:
+    return await FastApiNotesController.filter_notes_by_tag(tag_id, user_id)
+
+
+@router.delete("/remove_tag", response_model=PydanticRemoveTagResponseDto)
+async def remove_tag_from_note(
+    dto: PydanticRemoveTagRequestDto,
+    user_id: str = Depends(InMemorySessionService.validate_session_token),
+) -> PydanticRemoveTagResponseDto:
+    return await FastApiNotesController.remove_tag_from_note(dto, user_id)

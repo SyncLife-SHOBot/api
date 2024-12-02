@@ -4,8 +4,14 @@ from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (
     SqlModelUserModel,
 )
+from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_tags_model import (
+    SqlModelTagsModel,
+)
+from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_note_tag_link_model import (  # noqa: E501
+    NotesTagsLink,
+)
 from sqlmodel import SQLModel, Field, Relationship
-from typing import Optional
+from typing import List, Optional
 
 
 class SqlModelNotesModel(SQLModel, table=True):
@@ -19,6 +25,9 @@ class SqlModelNotesModel(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.today)
     updated_at: Optional[datetime] = Field(default=None)
     user: "SqlModelUserModel" = Relationship(back_populates="notes")
+    tags: List["SqlModelTagsModel"] = Relationship(
+        back_populates="notes", link_model=NotesTagsLink
+    )
 
     @classmethod
     def from_entity(cls, entity: "Notes") -> "SqlModelNotesModel":

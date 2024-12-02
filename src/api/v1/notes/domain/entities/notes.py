@@ -1,8 +1,9 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
 from src.api.v1.shared.domain.value_objects import Uuid
-from src.api.v1.notes.domain.validators import NotesValidator
+from src.api.v1.notes.domain.validators.notes import NotesValidator
+from src.api.v1.notes.domain.entities.tags import Tags
 
 
 @dataclass()
@@ -14,12 +15,21 @@ class Notes:
     is_deleted: bool
     created_at: datetime = datetime.now()
     updated_at: Optional[datetime] = None
+    tags: List[Tags] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         NotesValidator.validate_all(
             title=self.title,
             content=self.content,
         )
+
+    def add_tag(self, tag: Tags) -> None:
+        if tag not in self.tags:
+            self.tags.append(tag)
+
+    def remove_tag(self, tag: Tags) -> None:
+        if tag in self.tags:
+            self.tags.remove(tag)
 
     def __repr__(self) -> str:
         return (

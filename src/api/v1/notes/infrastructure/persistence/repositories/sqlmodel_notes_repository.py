@@ -3,6 +3,12 @@ from src.api.v1.notes.domain.repositories.notes_repository import NotesRepositor
 from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_notes_model import (
     SqlModelNotesModel,
 )
+from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_tags_model import (
+    SqlModelTagsModel,
+)
+from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_note_tag_link_model import (  # noqa: E501
+    NotesTagsLink,
+)
 from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.shared.infrastructure.persistence import get_db_connection
 from datetime import datetime
@@ -41,6 +47,17 @@ class SQLModelNotesRepository(NotesRepository):
         note = self.db_connection.exec(query).first()
         return note.to_entity() if note else None
 
+    def find_by_tag(self, tag_id: Uuid) -> List[Notes]:
+        query = (
+            select(SqlModelNotesModel)
+            .join(NotesTagsLink)
+            .join(SqlModelTagsModel)
+            .where(SqlModelTagsModel.id == str(tag_id))
+            .where(not_(SqlModelNotesModel.is_deleted))
+        )
+        notes = self.db_connection.exec(query).all()
+        return [note.to_entity() for note in notes]
+
     def find_all_by_user_id(
         self, user_id: Uuid, include_deleted: bool = False
     ) -> List[Notes]:
@@ -66,6 +83,15 @@ class SQLModelNotesRepository(NotesRepository):
 
     def save(self, note: Notes) -> bool:
         note_model = SqlModelNotesModel.from_entity(note)
+
+        # Sincronizar tags
+        for tag in note.tags:
+            tag_model = self.db_connection.exec(
+                select(SqlModelTagsModel).where(SqlModelTagsModel.id == str(tag.id))
+            ).first()
+            if tag_model:
+                note_model.tags.append(tag_model)
+
         self.db_connection.add(note_model)
         self.db_connection.commit()
         return True
@@ -80,6 +106,7 @@ class SQLModelNotesRepository(NotesRepository):
         if not existing_note:
             return (False, None)
 
+        # Actualizar campos de la nota
         updates = {
             "title": note.title,
             "content": note.content,
@@ -88,6 +115,26 @@ class SQLModelNotesRepository(NotesRepository):
         for field, value in updates.items():
             if getattr(existing_note, field) != value:
                 setattr(existing_note, field, value)
+
+        # Sincronizar tags en la tabla intermedia
+        existing_tags = {str(tag.id) for tag in existing_note.tags}
+        new_tags = {str(tag.id) for tag in note.tags}
+
+        # Agregar nuevas relaciones
+        for tag_id in new_tags - existing_tags:
+            tag = self.db_connection.exec(
+                select(SqlModelTagsModel).where(SqlModelTagsModel.id == tag_id)
+            ).first()
+            if tag:
+                existing_note.tags.append(tag)
+
+        # Eliminar relaciones obsoletas
+        for tag_id in existing_tags - new_tags:
+            tag_to_remove = next(
+                (tag for tag in existing_note.tags if tag.id == tag_id), None
+            )
+            if tag_to_remove:
+                existing_note.tags.remove(tag_to_remove)
 
         self.db_connection.add(existing_note)
         self.db_connection.commit()

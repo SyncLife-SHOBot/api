@@ -14,6 +14,10 @@ class NotesRepository(ABC):
         pass
 
     @abstractmethod
+    def find_by_tag(self, tag_id: Uuid) -> List[Notes]:
+        pass
+
+    @abstractmethod
     def find_all_by_user_id(
         self, id: Uuid, include_deleted: bool = False
     ) -> List[Notes]:

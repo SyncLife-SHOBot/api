@@ -1,7 +1,7 @@
 from src.api.v1.notes.domain.entities.notes import Notes
 from src.api.v1.notes.domain.repositories.notes_repository import NotesRepository
 from src.api.v1.notes.application.note.view_note.view_note_dto import ViewNoteDTO
-from src.api.v1.notes.domain.validators.notes_repository_validator import (
+from src.api.v1.notes.domain.validators.notes.notes_repository_validator import (
     NotesRepositoryValidator,
 )
 from src.api.v1.shared.domain.value_objects import Uuid
