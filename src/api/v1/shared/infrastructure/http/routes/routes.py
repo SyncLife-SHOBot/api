@@ -14,7 +14,7 @@ router.include_router(note_router)
 router.include_router(tag_router)
 
 
-@router.get("check/validate_session", summary="Valida si la sesión es válida")
+@router.get("/check/validate-session", summary="Valida si la sesión es válida")
 async def validate_session(session_token: str = Header(...)) -> dict[str, Any]:
     """
     Endpoint para validar si una sesión es válida.
