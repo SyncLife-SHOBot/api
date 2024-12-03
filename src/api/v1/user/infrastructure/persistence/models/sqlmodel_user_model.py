@@ -21,6 +21,9 @@ if TYPE_CHECKING:
     from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_notes_model import (  # noqa: E501
         SqlModelNotesModel,
     )
+    from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_tags_model import (
+        SqlModelTagsModel,
+    )
 
 
 class SqlModelUserModel(SQLModel, table=True):
@@ -37,11 +40,12 @@ class SqlModelUserModel(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.now)
     updated_at: Optional[datetime] = Field(default=None)
 
-    # Relacion con inventory_items
+    # Relaciones con inventory,notes y tags
     inventory_items: Mapped[List["SqlModelInventoryModel"]] = Relationship(
         back_populates="user"
     )
     notes: Mapped[List["SqlModelNotesModel"]] = Relationship(back_populates="user")
+    tags: Mapped[List["SqlModelTagsModel"]] = Relationship(back_populates="user")
 
     @classmethod
     def from_entity(cls, entity: User) -> "SqlModelUserModel":

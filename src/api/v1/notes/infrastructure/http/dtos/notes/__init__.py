@@ -4,11 +4,22 @@ from .delete_note.pydantic_delete_note_response_dto import (
     PydanticDeleteNotesResponseDto,
 )
 from .delete_note.pydantic_detele_note_request_dto import PydanticDeleteNotesRequestDto
-from .update_note.pydantic_update_note_request_dto import PydanticUpdateNotesResponseDto
-from .update_note.pydantic_update_note_response_dto import PydanticUpdateNotesRequestDto
+from .update_note.pydantic_update_note_response_dto import (
+    PydanticUpdateNotesResponseDto,
+)
+from .update_note.pydantic_update_note_request_dto import PydanticUpdateNotesRequestDto
 from .view_note.pydantic_view_note_request_dto import PydanticViewNotesRequestDto
 from .view_note.pydantic_view_note_response_dto import PydanticViewNotesResponseDto
-
+from .filter_note_by_tag.pydantic_filter_note_by_tag_request_dto import (
+    PydanticFilterNotesByTagRequestDto,
+)
+from .filter_note_by_tag.pydantic_filter_note_by_tag_response_dto import (
+    PydanticFilterNotesByTagResponseDto,
+)
+from .add_tag.pydantic_add_tag_request_dto import PydanticAddTagToNoteRequestDto
+from .add_tag.pydantic_add_tag_response_dto import PydanticAddTagToNoteResponseDto
+from .remove_tag.pydantic_remove_tag_request_dto import PydanticRemoveTagRequestDto
+from .remove_tag.pydantic_remove_tag_response_dto import PydanticRemoveTagResponseDto
 
 __all__ = [
     "PydanticCreateNoteRequestDto",
@@ -19,4 +30,10 @@ __all__ = [
     "PydanticUpdateNotesRequestDto",
     "PydanticViewNotesRequestDto",
     "PydanticViewNotesResponseDto",
+    "PydanticFilterNotesByTagRequestDto",
+    "PydanticFilterNotesByTagResponseDto",
+    "PydanticAddTagToNoteRequestDto",
+    "PydanticAddTagToNoteResponseDto",
+    "PydanticRemoveTagRequestDto",
+    "PydanticRemoveTagResponseDto",
 ]

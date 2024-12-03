@@ -1,6 +1,6 @@
 from src.api.v1.notes.domain.entities.notes import Notes
 from src.api.v1.notes.domain.repositories import NotesRepository
-from src.api.v1.notes.domain.validators.notes_repository_validator import (
+from src.api.v1.notes.domain.validators.notes.notes_repository_validator import (
     NotesRepositoryValidator,
 )
 from src.api.v1.notes.application.note.create_note.create_note_dto import CreateNoteDto
@@ -34,6 +34,7 @@ class CreateNoteUseCase:
             user_id=Uuid(dto.user_id),
             title=dto.title.strip(),
             content=dto.content.strip(),
+            is_deleted=False,
         )
 
         """
