@@ -8,7 +8,7 @@ from src.api.v1.user.domain.repositories.user_repository import UserRepository
 from src.api.v1.user.domain.validators.user_repository_validator import (
     UserRepositoryValidator,
 )
-from src.api.v1.user.domain.value_objects import Email, Password
+from src.api.v1.user.domain.value_objects import Email
 
 
 class LoginUseCase:
@@ -20,7 +20,7 @@ class LoginUseCase:
 
         user = UserRepositoryValidator.user_found(self.repository.find_by_email(email))
 
-        if user.password.check_password(Password(dto.password).password):
+        if not user.password.check_password(dto.password):
             raise UserValidationError(UserValidationTypeError.INVALID_CREDENTIALS)
 
         return user
