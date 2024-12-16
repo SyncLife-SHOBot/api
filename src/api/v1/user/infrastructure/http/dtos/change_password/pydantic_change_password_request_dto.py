@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+
 from src.api.v1.user.application.account_management.modify_user.change_password.change_password_dto import (  # noqa: E501
     ChangePasswordDto,
 )

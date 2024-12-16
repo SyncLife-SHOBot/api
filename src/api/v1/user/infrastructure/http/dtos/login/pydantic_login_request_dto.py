@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+
 from src.api.v1.user.application.authentication.login.login_dto import LoginDto
 
 

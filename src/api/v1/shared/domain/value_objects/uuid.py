@@ -1,7 +1,8 @@
+import uuid
 from dataclasses import dataclass
 from typing import Optional
+
 from src.api.v1.shared.domain.validators import UuidValidator
-import uuid
 
 
 @dataclass(frozen=True)

@@ -1,4 +1,5 @@
 from enum import Enum
+
 from src.api.v1.shared.domain.errors.shared_error import SharedError
 
 

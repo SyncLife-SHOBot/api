@@ -1,6 +1,7 @@
 from typing import Optional
-from src.api.v1.notes.domain.errors.tags import TagsError, TagsTypeError
+
 from src.api.v1.notes.domain.entities.tags import Tags
+from src.api.v1.notes.domain.errors.tags import TagsError, TagsTypeError
 from src.api.v1.notes.domain.repositories.tags_repository import TagsRepository
 from src.api.v1.shared.domain.value_objects import Uuid
 

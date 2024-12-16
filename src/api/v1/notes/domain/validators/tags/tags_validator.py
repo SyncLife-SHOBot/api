@@ -1,4 +1,4 @@
-from src.api.v1.notes.domain.errors.tags import TagsTypeError, TagsError
+from src.api.v1.notes.domain.errors.tags import TagsError, TagsTypeError
 
 
 class TagsValidator:

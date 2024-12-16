@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from src.api.v1.notes.application.tag.view_tag.view_tag_dto import ViewTagDto
 
 

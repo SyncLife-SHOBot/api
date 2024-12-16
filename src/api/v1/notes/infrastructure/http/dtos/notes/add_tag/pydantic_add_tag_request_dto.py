@@ -1,5 +1,7 @@
-from pydantic import BaseModel
 from typing import List
+
+from pydantic import BaseModel
+
 from src.api.v1.notes.application.note.add_tag.add_tag_dto import AddTagsDTO
 
 

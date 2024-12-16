@@ -1,12 +1,13 @@
 import datetime
+
+from src.api.v1.notes.application.tag.update_tag.update_tag_dto import UpdateTagDto
 from src.api.v1.notes.domain.entities.tags import Tags
+from src.api.v1.notes.domain.errors.tags import TagsError, TagsTypeError
 from src.api.v1.notes.domain.repositories.tags_repository import TagsRepository
 from src.api.v1.notes.domain.validators.tags.tags_repository_validator import (
     TagsRepositoryValidator,
 )
 from src.api.v1.notes.domain.validators.tags.tags_validator import TagsValidator
-from src.api.v1.notes.application.tag.update_tag.update_tag_dto import UpdateTagDto
-from src.api.v1.notes.domain.errors.tags import TagsError, TagsTypeError
 from src.api.v1.shared.domain.value_objects import Uuid
 
 

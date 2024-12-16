@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from src.api.v1.notes.application.note.delete_note.delete_note_dto import DeleteNoteDTO
 
 

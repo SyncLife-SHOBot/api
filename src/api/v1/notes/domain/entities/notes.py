@@ -1,9 +1,10 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List, Optional
-from src.api.v1.shared.domain.value_objects import Uuid
-from src.api.v1.notes.domain.validators.notes import NotesValidator
+
 from src.api.v1.notes.domain.entities.tags import Tags
+from src.api.v1.notes.domain.validators.notes import NotesValidator
+from src.api.v1.shared.domain.value_objects import Uuid
 
 
 @dataclass()

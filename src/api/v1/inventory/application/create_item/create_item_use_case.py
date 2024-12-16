@@ -1,8 +1,8 @@
+from src.api.v1.inventory.application.create_item.create_item_dto import CreateItemDto
 from src.api.v1.inventory.domain.entities.inventory import Inventory
 from src.api.v1.inventory.domain.repositories.inventory_repository import (
     InventoryRepository,
 )
-from src.api.v1.inventory.application.create_item.create_item_dto import CreateItemDto
 from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.domain.repositories import UserRepository
 from src.api.v1.user.domain.validators.user_repository_validator import (

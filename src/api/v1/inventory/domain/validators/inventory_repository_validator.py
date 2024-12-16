@@ -1,14 +1,14 @@
 from typing import Optional
 
+from src.api.v1.inventory.domain.entities.inventory import Inventory
 from src.api.v1.inventory.domain.errors import (
     InventoryItemError,
     InventoryItemTypeError,
 )
-from src.api.v1.shared.domain.value_objects import Uuid
-from src.api.v1.inventory.domain.entities.inventory import Inventory
 from src.api.v1.inventory.domain.repositories.inventory_repository import (
     InventoryRepository,
 )
+from src.api.v1.shared.domain.value_objects import Uuid
 
 
 class InventoryRepositoryValidator:

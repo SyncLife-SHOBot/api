@@ -1,4 +1,5 @@
 import re
+
 from src.api.v1.user.domain.errors import EmailError, EmailTypeError
 
 

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from src.api.v1.user.application.account_management.view_account.view_account_dto import (  # noqa: E501
     ViewAccountDto,
 )

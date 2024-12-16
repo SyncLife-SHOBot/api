@@ -1,5 +1,7 @@
-from typing import Any, Callable, Awaitable, TypeVar
+from typing import Any, Awaitable, Callable, TypeVar
+
 from fastapi import HTTPException
+
 from src.api.v1.notes.domain.errors.tags import TagError
 from src.api.v1.shared.domain.errors.shared_error import SharedError
 

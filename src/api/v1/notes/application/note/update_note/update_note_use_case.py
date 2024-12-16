@@ -1,12 +1,13 @@
 import datetime
+
+from src.api.v1.notes.application.note.update_note.update_note_dto import UpdateNoteDTO
 from src.api.v1.notes.domain.entities.notes import Notes
+from src.api.v1.notes.domain.errors.notes import NotesError, NotesTypeError
 from src.api.v1.notes.domain.repositories.notes_repository import NotesRepository
-from src.api.v1.notes.domain.validators.notes.notes_validator import NotesValidator
 from src.api.v1.notes.domain.validators.notes.notes_repository_validator import (
     NotesRepositoryValidator,
 )
-from src.api.v1.notes.application.note.update_note.update_note_dto import UpdateNoteDTO
-from src.api.v1.notes.domain.errors.notes import NotesError, NotesTypeError
+from src.api.v1.notes.domain.validators.notes.notes_validator import NotesValidator
 from src.api.v1.shared.domain.value_objects import Uuid
 
 

@@ -1,6 +1,8 @@
 from dataclasses import dataclass
-from src.api.v1.user.domain.validators import PasswordValidator
+
 import bcrypt
+
+from src.api.v1.user.domain.validators import PasswordValidator
 
 
 @dataclass(frozen=True)

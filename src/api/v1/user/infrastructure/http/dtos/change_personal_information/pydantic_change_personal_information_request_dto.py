@@ -1,5 +1,7 @@
 from datetime import date
+
 from pydantic import BaseModel, EmailStr
+
 from src.api.v1.user.application.account_management.modify_user.change_personal_information.change_personal_information_dto import (  # noqa: E501
     ChangePersonalInformationDto,
 )

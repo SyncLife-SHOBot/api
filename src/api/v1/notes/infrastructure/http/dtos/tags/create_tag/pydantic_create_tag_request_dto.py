@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from src.api.v1.notes.application.tag.create_tag.create_tag_dto import CreateTagDto
 
 

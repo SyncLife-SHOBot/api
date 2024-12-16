@@ -1,8 +1,9 @@
-from sqlmodel import SQLModel, Session, create_engine
+import os
 from contextlib import contextmanager
 from typing import Generator
+
 from dotenv import load_dotenv
-import os
+from sqlmodel import Session, SQLModel, create_engine
 
 load_dotenv()
 

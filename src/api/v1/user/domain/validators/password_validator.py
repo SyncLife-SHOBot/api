@@ -1,5 +1,7 @@
 import re
+
 import bcrypt
+
 from src.api.v1.user.domain.errors import PasswordError, PasswordTypeError
 
 # import zxcvbn

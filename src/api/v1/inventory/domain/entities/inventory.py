@@ -1,9 +1,10 @@
 from dataclasses import dataclass
-from src.api.v1.shared.domain.value_objects import Uuid
+from datetime import date
+
 from src.api.v1.inventory.domain.validators.inventory_validator import (
     InventoryValidator,
 )
-from datetime import date
+from src.api.v1.shared.domain.value_objects import Uuid
 
 
 @dataclass()

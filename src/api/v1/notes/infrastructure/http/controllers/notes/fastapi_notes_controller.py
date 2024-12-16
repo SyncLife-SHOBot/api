@@ -1,52 +1,55 @@
+from typing import List
+
+from fastapi import HTTPException
+
+from src.api.v1.notes.application.note.add_tag import AddTagsUseCase
+from src.api.v1.notes.application.note.create_note import CreateNoteUseCase
+from src.api.v1.notes.application.note.delete_note import DeleteNoteUseCase
+from src.api.v1.notes.application.note.delete_note.delete_note_dto import DeleteNoteDTO
+from src.api.v1.notes.application.note.filter_note_by_tag import FilterNotesByTagUseCase
+from src.api.v1.notes.application.note.filter_note_by_tag.filter_note_by_tag_dto import (  # noqa: E501
+    FilterNotesByTagDTO,
+)
+from src.api.v1.notes.application.note.remove_tag import RemoveTagUseCase
+from src.api.v1.notes.application.note.update_note import UpdateNoteUseCase
+from src.api.v1.notes.application.note.view_all_notes import ViewAllNotesUseCase
+from src.api.v1.notes.application.note.view_all_notes.view_all_dto import (
+    ViewAllNotesDTO,
+)
+from src.api.v1.notes.application.note.view_note import ViewNoteUseCase
+from src.api.v1.notes.application.note.view_note.view_note_dto import ViewNoteDTO
+from src.api.v1.notes.domain.errors.notes import NotesError, NotesTypeError
+from src.api.v1.notes.infrastructure.http.dtos.notes import (
+    PydanticAddTagToNoteRequestDto,
+    PydanticAddTagToNoteResponseDto,
+    PydanticCreateNoteRequestDto,
+    PydanticCreateNoteResponseDto,
+    PydanticDeleteNotesResponseDto,
+    PydanticFilterNotesByTagResponseDto,
+    PydanticRemoveTagRequestDto,
+    PydanticRemoveTagResponseDto,
+    PydanticUpdateNotesRequestDto,
+    PydanticUpdateNotesResponseDto,
+    PydanticViewNotesResponseDto,
+)
 from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_notes_model import (
     SqlModelNotesModel,
 )
 from src.api.v1.notes.infrastructure.persistence.repositories.sqlmodel_notes_repository import (  # noqa: E501
     SQLModelNotesRepository,
 )
-from src.api.v1.user.infrastructure.persistence.repositories.sqlmodel_user_repository import (  # noqa: E501
-    SqlModelUserRepository,
-)
-from src.api.v1.notes.infrastructure.http.dtos.notes import (
-    PydanticCreateNoteRequestDto,
-    PydanticCreateNoteResponseDto,
-    PydanticDeleteNotesResponseDto,
-    PydanticUpdateNotesRequestDto,
-    PydanticUpdateNotesResponseDto,
-    PydanticViewNotesResponseDto,
-    PydanticAddTagToNoteResponseDto,
-    PydanticAddTagToNoteRequestDto,
-    PydanticFilterNotesByTagResponseDto,
-    PydanticRemoveTagRequestDto,
-    PydanticRemoveTagResponseDto,
-)
 from src.api.v1.notes.infrastructure.persistence.repositories.sqlmodel_tags_repository import (  # noqa: E501
     SQLModelTagsRepository,
 )
-from src.api.v1.notes.application.note.filter_note_by_tag.filter_note_by_tag_dto import (  # noqa: E501
-    FilterNotesByTagDTO,
-)
-from src.api.v1.notes.application.note.remove_tag import RemoveTagUseCase
-from src.api.v1.notes.application.note.create_note import CreateNoteUseCase
-from src.api.v1.notes.application.note.delete_note import DeleteNoteUseCase
-from src.api.v1.notes.application.note.update_note import UpdateNoteUseCase
-from src.api.v1.notes.application.note.view_note import ViewNoteUseCase
-from src.api.v1.notes.application.note.view_all_notes import ViewAllNotesUseCase
-from src.api.v1.notes.application.note.delete_note.delete_note_dto import DeleteNoteDTO
-from src.api.v1.notes.application.note.view_note.view_note_dto import ViewNoteDTO
-from src.api.v1.notes.application.note.view_all_notes.view_all_dto import (
-    ViewAllNotesDTO,
-)
-from src.api.v1.notes.application.note.add_tag import AddTagsUseCase
-from src.api.v1.notes.application.note.filter_note_by_tag import FilterNotesByTagUseCase
-from src.api.v1.notes.domain.errors.notes import NotesError, NotesTypeError
+from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.infrastructure.http.services.in_memory_session_service import (
     InMemorySessionService,
 )
-from src.api.v1.shared.domain.value_objects import Uuid
+from src.api.v1.user.infrastructure.persistence.repositories.sqlmodel_user_repository import (  # noqa: E501
+    SqlModelUserRepository,
+)
+
 from .exception_handler import handle_exceptions
-from fastapi import HTTPException
-from typing import List
 
 
 class FastApiNotesController:

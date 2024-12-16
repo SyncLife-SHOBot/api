@@ -1,3 +1,8 @@
+from datetime import datetime
+from typing import List, Optional, Tuple
+
+from sqlmodel import Session, not_, select
+
 from src.api.v1.notes.domain.entities.tags import Tags
 from src.api.v1.notes.domain.repositories.tags_repository import TagsRepository
 from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_tags_model import (
@@ -5,9 +10,6 @@ from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_tags_model impo
 )
 from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.shared.infrastructure.persistence import get_db_connection
-from datetime import datetime
-from typing import List, Optional, Tuple
-from sqlmodel import Session, select, not_
 
 
 class SQLModelTagsRepository(TagsRepository):

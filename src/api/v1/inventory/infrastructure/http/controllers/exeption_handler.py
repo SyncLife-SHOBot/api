@@ -1,5 +1,7 @@
-from typing import Any, Callable, Awaitable, TypeVar
+from typing import Any, Awaitable, Callable, TypeVar
+
 from fastapi import HTTPException
+
 from src.api.v1.inventory.domain.errors import InventoryItemError
 from src.api.v1.shared.domain.errors.shared_error import SharedError
 

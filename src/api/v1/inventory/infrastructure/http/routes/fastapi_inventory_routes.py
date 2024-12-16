@@ -1,19 +1,18 @@
 from typing import List
+
 from fastapi import APIRouter, Depends
 
 from src.api.v1.inventory.infrastructure.http.controllers.fastapi_inventory_controller import (  # noqa: E501
     FastApiInventoryController,
 )
-
 from src.api.v1.inventory.infrastructure.http.dtos import (
-    PydanticUpdateItemResponseDto,
-    PydanticUpdateItemRequestDto,
-    PydanticCreateItemResponseDto,
     PydanticCreateItemRequestDto,
-    PydanticViewItemResponseDto,
+    PydanticCreateItemResponseDto,
     PydanticDeleteItemResponseDto,
+    PydanticUpdateItemRequestDto,
+    PydanticUpdateItemResponseDto,
+    PydanticViewItemResponseDto,
 )
-
 from src.api.v1.user.infrastructure.http.services import InMemorySessionService
 
 router: APIRouter = APIRouter(prefix="/inventory", tags=["Inventory"])

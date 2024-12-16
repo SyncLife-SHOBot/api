@@ -1,6 +1,6 @@
+from src.api.v1.notes.application.tag.view_tag.view_tag_dto import ViewTagDto
 from src.api.v1.notes.domain.entities.tags import Tags
 from src.api.v1.notes.domain.repositories.tags_repository import TagsRepository
-from src.api.v1.notes.application.tag.view_tag.view_tag_dto import ViewTagDto
 from src.api.v1.notes.domain.validators.tags.tags_repository_validator import (
     TagsRepositoryValidator,
 )

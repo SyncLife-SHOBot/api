@@ -1,19 +1,21 @@
+from datetime import datetime
+from typing import List, Optional, Tuple
+
+from sqlmodel import Session, not_, select
+
 from src.api.v1.notes.domain.entities.notes import Notes
 from src.api.v1.notes.domain.repositories.notes_repository import NotesRepository
+from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_note_tag_link_model import (  # noqa: E501
+    NotesTagsLink,
+)
 from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_notes_model import (
     SqlModelNotesModel,
 )
 from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_tags_model import (
     SqlModelTagsModel,
 )
-from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_note_tag_link_model import (  # noqa: E501
-    NotesTagsLink,
-)
 from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.shared.infrastructure.persistence import get_db_connection
-from datetime import datetime
-from typing import List, Optional, Tuple
-from sqlmodel import Session, select, not_
 
 
 class SQLModelNotesRepository(NotesRepository):

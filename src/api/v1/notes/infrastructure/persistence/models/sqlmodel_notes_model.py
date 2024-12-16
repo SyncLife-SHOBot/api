@@ -1,17 +1,19 @@
 from datetime import datetime
+from typing import List, Optional
+
+from sqlmodel import Field, Relationship, SQLModel
+
 from src.api.v1.notes.domain.entities.notes import Notes
-from src.api.v1.shared.domain.value_objects import Uuid
-from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (
-    SqlModelUserModel,
+from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_note_tag_link_model import (  # noqa: E501
+    NotesTagsLink,
 )
 from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_tags_model import (
     SqlModelTagsModel,
 )
-from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_note_tag_link_model import (  # noqa: E501
-    NotesTagsLink,
+from src.api.v1.shared.domain.value_objects import Uuid
+from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (
+    SqlModelUserModel,
 )
-from sqlmodel import SQLModel, Field, Relationship
-from typing import List, Optional
 
 
 class SqlModelNotesModel(SQLModel, table=True):

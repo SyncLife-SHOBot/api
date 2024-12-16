@@ -1,23 +1,24 @@
+from typing import List
+
+from fastapi import APIRouter, Depends
+
 from src.api.v1.notes.infrastructure.http.controllers.notes.fastapi_notes_controller import (  # noqa: E501
     FastApiNotesController,
 )
-
 from src.api.v1.notes.infrastructure.http.dtos.notes import (
-    PydanticCreateNoteResponseDto,
+    PydanticAddTagToNoteRequestDto,
+    PydanticAddTagToNoteResponseDto,
     PydanticCreateNoteRequestDto,
+    PydanticCreateNoteResponseDto,
+    PydanticDeleteNotesResponseDto,
+    PydanticFilterNotesByTagResponseDto,
+    PydanticRemoveTagRequestDto,
+    PydanticRemoveTagResponseDto,
     PydanticUpdateNotesRequestDto,
     PydanticUpdateNotesResponseDto,
     PydanticViewNotesResponseDto,
-    PydanticDeleteNotesResponseDto,
-    PydanticAddTagToNoteRequestDto,
-    PydanticAddTagToNoteResponseDto,
-    PydanticFilterNotesByTagResponseDto,
-    PydanticRemoveTagResponseDto,
-    PydanticRemoveTagRequestDto,
 )
 from src.api.v1.user.infrastructure.http.services import InMemorySessionService
-from typing import List
-from fastapi import APIRouter, Depends
 
 router: APIRouter = APIRouter(prefix="/notes", tags=["Notes"])
 
