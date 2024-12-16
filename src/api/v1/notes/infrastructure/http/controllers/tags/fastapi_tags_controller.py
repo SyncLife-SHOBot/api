@@ -1,12 +1,18 @@
-from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_tags_model import (
-    SqlModelTagsModel,
+from typing import List
+
+from fastapi import HTTPException
+
+from src.api.v1.notes.application.tag.create_tag import CreateTagUseCase
+from src.api.v1.notes.application.tag.delete_tag import DeleteTagUseCase
+from src.api.v1.notes.application.tag.delete_tag.delete_tag_dto import DeleteTagDto
+from src.api.v1.notes.application.tag.update_tag import UpdateTagUseCase
+from src.api.v1.notes.application.tag.view_all_tags import ViewAllTagsUseCase
+from src.api.v1.notes.application.tag.view_all_tags.view_all_tags_dto import (
+    ViewAllTagsDto,
 )
-from src.api.v1.notes.infrastructure.persistence.repositories.sqlmodel_tags_repository import (  # noqa: E501
-    SQLModelTagsRepository,
-)
-from src.api.v1.user.infrastructure.persistence.repositories.sqlmodel_user_repository import (  # noqa: E501
-    SqlModelUserRepository,
-)
+from src.api.v1.notes.application.tag.view_tag import ViewTagUseCase
+from src.api.v1.notes.application.tag.view_tag.view_tag_dto import ViewTagDto
+from src.api.v1.notes.domain.errors.tags import TagsError, TagsTypeError
 from src.api.v1.notes.infrastructure.http.dtos.tags import (
     PydanticCreateTagRequestDto,
     PydanticCreateTagResponseDto,
@@ -15,24 +21,21 @@ from src.api.v1.notes.infrastructure.http.dtos.tags import (
     PydanticUpdateTagsResponseDto,
     PydanticViewTagsResponseDto,
 )
-from src.api.v1.notes.application.tag.create_tag import CreateTagUseCase
-from src.api.v1.notes.application.tag.delete_tag import DeleteTagUseCase
-from src.api.v1.notes.application.tag.update_tag import UpdateTagUseCase
-from src.api.v1.notes.application.tag.view_tag import ViewTagUseCase
-from src.api.v1.notes.application.tag.view_all_tags import ViewAllTagsUseCase
-from src.api.v1.notes.application.tag.view_tag.view_tag_dto import ViewTagDto
-from src.api.v1.notes.application.tag.view_all_tags.view_all_tags_dto import (
-    ViewAllTagsDto,
+from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_tags_model import (
+    SqlModelTagsModel,
 )
-from src.api.v1.notes.application.tag.delete_tag.delete_tag_dto import DeleteTagDto
-from src.api.v1.notes.domain.errors.tags import TagsError, TagsTypeError
+from src.api.v1.notes.infrastructure.persistence.repositories.sqlmodel_tags_repository import (  # noqa: E501
+    SQLModelTagsRepository,
+)
+from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.infrastructure.http.services.in_memory_session_service import (
     InMemorySessionService,
 )
-from src.api.v1.shared.domain.value_objects import Uuid
+from src.api.v1.user.infrastructure.persistence.repositories.sqlmodel_user_repository import (  # noqa: E501
+    SqlModelUserRepository,
+)
+
 from .exception_handler import handle_exceptions
-from fastapi import HTTPException
-from typing import List
 
 
 class FastApiTagsController:

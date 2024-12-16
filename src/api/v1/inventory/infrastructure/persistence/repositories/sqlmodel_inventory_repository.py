@@ -1,14 +1,16 @@
 from datetime import datetime
-from src.api.v1.shared.domain.value_objects import Uuid
 from typing import List, Optional, Tuple
-from sqlmodel import Session, select, not_
+
+from sqlmodel import Session, not_, select
+
+from src.api.v1.inventory.domain.entities.inventory import Inventory
 from src.api.v1.inventory.domain.repositories.inventory_repository import (
     InventoryRepository,
 )
-from src.api.v1.inventory.domain.entities.inventory import Inventory
 from src.api.v1.inventory.infrastructure.persistence.models.sqlmodel_inventory_model import (  # noqa: E501
     SqlModelInventoryModel,
 )
+from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.shared.infrastructure.persistence import get_db_connection
 
 

@@ -1,18 +1,27 @@
 from src.api.v1.shared.domain.value_objects import Uuid
+from src.api.v1.user.application import (
+    ChangePasswordUseCase,
+    ChangePersonalInformationUseCase,
+    DeleteAccountUseCase,
+    ViewAccountUseCase,
+)
 from src.api.v1.user.domain.errors.user_repository_error import (
     UserRepositoryError,
     UserRepositoryTypeError,
 )
 from src.api.v1.user.domain.value_objects import Email
+from src.api.v1.user.infrastructure.http.controllers.exeption_handler import (
+    handle_exceptions,
+)
 from src.api.v1.user.infrastructure.http.dtos import (
     PydanticChangePasswordRequestDto,
     PydanticChangePasswordResponseDto,
-    PydanticViewAccountRequestDto,
-    PydanticViewAccountResponseDto,
-    PydanticDeleteAccountRequestDto,
-    PydanticDeleteAccountResponseDto,
     PydanticChangePersonalInformationRequestDto,
     PydanticChangePersonalInformationResponseDto,
+    PydanticDeleteAccountRequestDto,
+    PydanticDeleteAccountResponseDto,
+    PydanticViewAccountRequestDto,
+    PydanticViewAccountResponseDto,
 )
 from src.api.v1.user.infrastructure.http.services.in_memory_session_service import (
     InMemorySessionService,
@@ -22,15 +31,6 @@ from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model impor
 )
 from src.api.v1.user.infrastructure.persistence.repositories.sqlmodel_user_repository import (  # noqa: E501
     SqlModelUserRepository,
-)
-from src.api.v1.user.application import (
-    ViewAccountUseCase,
-    DeleteAccountUseCase,
-    ChangePasswordUseCase,
-    ChangePersonalInformationUseCase,
-)
-from src.api.v1.user.infrastructure.http.controllers.exeption_handler import (
-    handle_exceptions,
 )
 
 

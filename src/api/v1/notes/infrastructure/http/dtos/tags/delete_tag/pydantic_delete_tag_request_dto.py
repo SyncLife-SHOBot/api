@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from src.api.v1.notes.application.tag.delete_tag.delete_tag_dto import DeleteTagDto
 
 

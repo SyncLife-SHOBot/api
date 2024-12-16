@@ -1,12 +1,12 @@
-from sqlalchemy.orm import Mapped
 from datetime import date, datetime
-from sqlmodel import SQLModel, Field, Relationship
-from typing import TYPE_CHECKING, Optional
-from src.api.v1.user.domain.entities import User
-from src.api.v1.shared.domain.value_objects import Uuid
-from src.api.v1.user.domain.value_objects import Email, FullName, Password, Phone
-from typing import List
+from typing import TYPE_CHECKING, List, Optional
 
+from sqlalchemy.orm import Mapped
+from sqlmodel import Field, Relationship, SQLModel
+
+from src.api.v1.shared.domain.value_objects import Uuid
+from src.api.v1.user.domain.entities import User
+from src.api.v1.user.domain.value_objects import Email, FullName, Password, Phone
 
 """
 Esto es para la importacion circular, ya que, SQLMODEL importa

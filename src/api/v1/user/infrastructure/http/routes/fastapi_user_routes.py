@@ -1,24 +1,24 @@
 from fastapi import APIRouter, Depends
+
 from src.api.v1.user.infrastructure.http.controllers import (
     FastApiAccountManagementController,
     FastApiAuthenticationController,
 )
 from src.api.v1.user.infrastructure.http.dtos import (
-    PydanticRegisterRequestDto,
-    PydanticRegisterResponseDto,
-    PydanticLoginRequestDto,
-    PydanticLoginResponseDto,
-    PydanticViewAccountRequestDto,
-    PydanticViewAccountResponseDto,
-    PydanticDeleteAccountRequestDto,
-    PydanticDeleteAccountResponseDto,
     PydanticChangePasswordRequestDto,
     PydanticChangePasswordResponseDto,
     PydanticChangePersonalInformationRequestDto,
     PydanticChangePersonalInformationResponseDto,
+    PydanticDeleteAccountRequestDto,
+    PydanticDeleteAccountResponseDto,
+    PydanticLoginRequestDto,
+    PydanticLoginResponseDto,
+    PydanticRegisterRequestDto,
+    PydanticRegisterResponseDto,
+    PydanticViewAccountRequestDto,
+    PydanticViewAccountResponseDto,
 )
 from src.api.v1.user.infrastructure.http.services import InMemorySessionService
-
 
 router: APIRouter = APIRouter(prefix="/users", tags=["Users"])
 

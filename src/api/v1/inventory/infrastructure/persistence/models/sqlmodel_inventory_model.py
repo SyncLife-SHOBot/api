@@ -1,8 +1,10 @@
-from sqlmodel import SQLModel, Field, Relationship
 from datetime import date
-from src.api.v1.shared.domain.value_objects import Uuid
 from typing import Optional
+
+from sqlmodel import Field, Relationship, SQLModel
+
 from src.api.v1.inventory.domain.entities.inventory import Inventory
+from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (
     SqlModelUserModel,
 )

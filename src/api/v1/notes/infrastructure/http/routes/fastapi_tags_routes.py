@@ -1,17 +1,19 @@
+from typing import List
+
+from fastapi import APIRouter, Depends
+
 from src.api.v1.notes.infrastructure.http.controllers.tags.fastapi_tags_controller import (  # noqa: E501
     FastApiTagsController,
 )
 from src.api.v1.notes.infrastructure.http.dtos.tags import (
     PydanticCreateTagRequestDto,
     PydanticCreateTagResponseDto,
+    PydanticDeleteTagResponseDto,
     PydanticUpdateTagsRequestDto,
     PydanticUpdateTagsResponseDto,
     PydanticViewTagsResponseDto,
-    PydanticDeleteTagResponseDto,
 )
 from src.api.v1.user.infrastructure.http.services import InMemorySessionService
-from typing import List
-from fastapi import APIRouter, Depends
 
 router: APIRouter = APIRouter(prefix="/tags", tags=["Tags"])
 

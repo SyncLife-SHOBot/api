@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from src.api.v1.notes.application.tag.update_tag.update_tag_dto import UpdateTagDto
 
 

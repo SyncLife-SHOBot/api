@@ -1,9 +1,10 @@
-from src.api.v1.notes.domain.entities.notes import Notes
-from src.api.v1.notes.domain.repositories.notes_repository import NotesRepository
+from typing import List
+
 from src.api.v1.notes.application.note.view_all_notes.view_all_dto import (
     ViewAllNotesDTO,
 )
-from typing import List
+from src.api.v1.notes.domain.entities.notes import Notes
+from src.api.v1.notes.domain.repositories.notes_repository import NotesRepository
 
 
 class ViewAllNotesUseCase:

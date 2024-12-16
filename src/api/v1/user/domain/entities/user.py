@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Optional
+
+from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.domain.validators.user_validator import UserValidator
 from src.api.v1.user.domain.value_objects import Email, FullName, Password
-from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.domain.value_objects.phone import Phone
 
 

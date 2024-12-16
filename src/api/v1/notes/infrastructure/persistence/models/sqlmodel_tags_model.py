@@ -1,11 +1,13 @@
 from datetime import datetime
+from typing import TYPE_CHECKING, List, Optional
+
+from sqlmodel import Field, Relationship, SQLModel
+
 from src.api.v1.notes.domain.entities.tags import Tags
-from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_note_tag_link_model import (  # noqa: E501
     NotesTagsLink,
 )
-from sqlmodel import SQLModel, Field, Relationship
-from typing import TYPE_CHECKING, List, Optional
+from src.api.v1.shared.domain.value_objects import Uuid
 
 if TYPE_CHECKING:
     from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_notes_model import (  # noqa: E501

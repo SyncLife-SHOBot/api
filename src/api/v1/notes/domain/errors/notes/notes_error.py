@@ -1,4 +1,5 @@
 from enum import Enum
+
 from src.api.v1.notes.domain.errors.notes import NoteError
 
 

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from src.api.v1.notes.application.note.update_note.update_note_dto import UpdateNoteDTO
 
 

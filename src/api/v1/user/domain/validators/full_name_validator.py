@@ -1,6 +1,7 @@
 import re
-from src.api.v1.user.domain.errors import FullNameError, FullNameTypeError
 from typing import Tuple
+
+from src.api.v1.user.domain.errors import FullNameError, FullNameTypeError
 
 
 class FullNameValidator:

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from src.api.v1.user.application.account_management.delete_account.delete_account_dto import (  # noqa: E501
     DeleteAccountDto,
 )

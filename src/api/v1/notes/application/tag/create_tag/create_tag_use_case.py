@@ -1,14 +1,14 @@
+from src.api.v1.notes.application.tag.create_tag.create_tag_dto import CreateTagDto
 from src.api.v1.notes.domain.entities.tags import Tags
 from src.api.v1.notes.domain.repositories import TagsRepository
 from src.api.v1.notes.domain.validators.tags.tags_repository_validator import (
     TagsRepositoryValidator,
 )
-from src.api.v1.notes.application.tag.create_tag.create_tag_dto import CreateTagDto
+from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.domain.repositories import UserRepository
 from src.api.v1.user.domain.validators.user_repository_validator import (
     UserRepositoryValidator,
 )
-from src.api.v1.shared.domain.value_objects import Uuid
 
 
 class CreateTagUseCase:

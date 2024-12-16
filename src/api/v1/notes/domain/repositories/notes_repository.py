@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional, Tuple
+
 from src.api.v1.notes.domain.entities.notes import Notes
 from src.api.v1.shared.domain.value_objects import Uuid
 

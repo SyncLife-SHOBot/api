@@ -20,6 +20,18 @@ python-dotenv = "^1.0.1"
 psycopg2-binary = "^2.9.10"
 zxcvbn = "^4.4.28"
 
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+
+[tool.isort]
+profile = "black"                                                              # Compatible con Black
+line_length = 88                                                               # Mismo valor que en Black
+multi_line_output = 3
+include_trailing_comma = true
+known_first_party = ["synclife_api"]                                           # Ajustá el nombre según tu módulo
+known_third_party = ["fastapi", "sqlalchemy", "bcrypt", "psycopg2", "alembic"]
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 
 [build-system]
 requires = ["poetry-core"]

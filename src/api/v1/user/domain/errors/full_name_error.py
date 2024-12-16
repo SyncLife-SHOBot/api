@@ -1,4 +1,5 @@
 from enum import Enum
+
 from src.api.v1.user.domain.errors.user_error import UserError
 
 

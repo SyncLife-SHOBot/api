@@ -1,9 +1,10 @@
-from src.api.v1.notes.domain.entities.tags import Tags
-from src.api.v1.notes.domain.repositories.tags_repository import TagsRepository
+from typing import List
+
 from src.api.v1.notes.application.tag.view_all_tags.view_all_tags_dto import (
     ViewAllTagsDto,
 )
-from typing import List
+from src.api.v1.notes.domain.entities.tags import Tags
+from src.api.v1.notes.domain.repositories.tags_repository import TagsRepository
 
 
 class ViewAllTagsUseCase:

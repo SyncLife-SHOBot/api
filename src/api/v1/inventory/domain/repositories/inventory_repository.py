@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional, Tuple
-from src.api.v1.shared.domain.value_objects import Uuid
+
 from src.api.v1.inventory.domain.entities.inventory import Inventory
+from src.api.v1.shared.domain.value_objects import Uuid
 
 
 class InventoryRepository(ABC):

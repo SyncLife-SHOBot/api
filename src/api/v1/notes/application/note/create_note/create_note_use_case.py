@@ -1,9 +1,9 @@
+from src.api.v1.notes.application.note.create_note.create_note_dto import CreateNoteDto
 from src.api.v1.notes.domain.entities.notes import Notes
 from src.api.v1.notes.domain.repositories import NotesRepository
 from src.api.v1.notes.domain.validators.notes.notes_repository_validator import (
     NotesRepositoryValidator,
 )
-from src.api.v1.notes.application.note.create_note.create_note_dto import CreateNoteDto
 from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.domain.repositories import UserRepository
 from src.api.v1.user.domain.validators.user_repository_validator import (

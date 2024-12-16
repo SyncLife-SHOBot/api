@@ -1,9 +1,6 @@
 from src.api.v1.user.application.authentication.login.login_dto import LoginDto
 from src.api.v1.user.domain.entities.user import User
-from src.api.v1.user.domain.errors import (
-    UserValidationError,
-    UserValidationTypeError,
-)
+from src.api.v1.user.domain.errors import UserValidationError, UserValidationTypeError
 from src.api.v1.user.domain.repositories.user_repository import UserRepository
 from src.api.v1.user.domain.validators.user_repository_validator import (
     UserRepositoryValidator,

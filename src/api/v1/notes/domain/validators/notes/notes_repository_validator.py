@@ -1,13 +1,9 @@
 from typing import Optional
 
-from src.api.v1.notes.domain.errors.notes import (
-    NotesError,
-    NotesTypeError,
-)
-
-from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.notes.domain.entities.notes import Notes
+from src.api.v1.notes.domain.errors.notes import NotesError, NotesTypeError
 from src.api.v1.notes.domain.repositories import NotesRepository
+from src.api.v1.shared.domain.value_objects import Uuid
 
 
 class NotesRepositoryValidator:

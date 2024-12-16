@@ -1,12 +1,12 @@
-from src.api.v1.shared.domain.value_objects import Uuid
+from src.api.v1.inventory.application.view_item.view_item_dto import ViewItemDTO
 from src.api.v1.inventory.domain.entities.inventory import Inventory
 from src.api.v1.inventory.domain.repositories.inventory_repository import (
     InventoryRepository,
 )
-from src.api.v1.inventory.application.view_item.view_item_dto import ViewItemDTO
 from src.api.v1.inventory.domain.validators.inventory_repository_validator import (
     InventoryRepositoryValidator,
 )
+from src.api.v1.shared.domain.value_objects import Uuid
 
 
 class ViewItemUseCase:

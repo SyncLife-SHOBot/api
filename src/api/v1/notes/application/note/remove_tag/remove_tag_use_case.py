@@ -1,3 +1,4 @@
+from src.api.v1.notes.application.note.remove_tag.remove_tag_dto import RemoveTagDTO
 from src.api.v1.notes.domain.entities.notes import Notes
 from src.api.v1.notes.domain.repositories.notes_repository import NotesRepository
 from src.api.v1.notes.domain.repositories.tags_repository import TagsRepository
@@ -7,7 +8,6 @@ from src.api.v1.notes.domain.validators.notes.notes_repository_validator import 
 from src.api.v1.notes.domain.validators.tags.tags_repository_validator import (
     TagsRepositoryValidator,
 )
-from src.api.v1.notes.application.note.remove_tag.remove_tag_dto import RemoveTagDTO
 from src.api.v1.shared.domain.value_objects import Uuid
 
 

@@ -1,5 +1,7 @@
-from pydantic import BaseModel, EmailStr
 from datetime import date
+
+from pydantic import BaseModel, EmailStr
+
 from src.api.v1.user.application.authentication.register.register_dto import RegisterDto
 
 

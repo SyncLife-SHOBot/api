@@ -1,16 +1,11 @@
+import os
 from logging.config import fileConfig
-
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
 
 from alembic import context
 from dotenv import load_dotenv
-import os
-
+from sqlalchemy import engine_from_config, pool
 from sqlmodel import SQLModel
-from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (  # noqa: E501
-    SqlModelUserModel,
-)
+
 from src.api.v1.inventory.infrastructure.persistence.models.sqlmodel_inventory_model import (  # noqa: E501
     SqlModelInventoryModel,
 )
@@ -20,7 +15,9 @@ from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_notes_model imp
 from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_tags_model import (
     SqlModelTagsModel,
 )
-
+from src.api.v1.user.infrastructure.persistence.models.sqlmodel_user_model import (  # noqa: E501
+    SqlModelUserModel,
+)
 
 models = [
     SqlModelUserModel,

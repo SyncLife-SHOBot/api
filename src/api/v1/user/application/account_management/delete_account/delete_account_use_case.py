@@ -3,10 +3,7 @@ from src.api.v1.user.application.account_management.delete_account.delete_accoun
     DeleteAccountDto,
 )
 from src.api.v1.user.domain.entities import User
-from src.api.v1.user.domain.errors import (
-    UserRepositoryError,
-    UserRepositoryTypeError,
-)
+from src.api.v1.user.domain.errors import UserRepositoryError, UserRepositoryTypeError
 from src.api.v1.user.domain.repositories import UserRepository
 from src.api.v1.user.domain.validators.user_repository_validator import (
     UserRepositoryValidator,

@@ -1,12 +1,13 @@
 from typing import List
+
+from src.api.v1.notes.application.note.filter_note_by_tag.filter_note_by_tag_dto import (  # noqa: E501
+    FilterNotesByTagDTO,
+)
 from src.api.v1.notes.domain.entities.notes import Notes
 from src.api.v1.notes.domain.repositories.notes_repository import NotesRepository
 from src.api.v1.notes.domain.repositories.tags_repository import TagsRepository
 from src.api.v1.notes.domain.validators.tags.tags_repository_validator import (
     TagsRepositoryValidator,
-)
-from src.api.v1.notes.application.note.filter_note_by_tag.filter_note_by_tag_dto import (  # noqa: E501
-    FilterNotesByTagDTO,
 )
 from src.api.v1.shared.domain.value_objects import Uuid
 

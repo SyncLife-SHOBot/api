@@ -1,8 +1,6 @@
 from datetime import date
-from src.api.v1.user.domain.errors import (
-    UserValidationError,
-    UserValidationTypeError,
-)
+
+from src.api.v1.user.domain.errors import UserValidationError, UserValidationTypeError
 
 
 class UserValidator:
