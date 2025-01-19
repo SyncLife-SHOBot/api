@@ -45,7 +45,7 @@ class SqlModelUserRepository(UserRepository):
         return user.to_entity() if user else None
 
     def find_by_email(
-        self, email: Email, include_deleted: bool = False
+        self, email: Email, include_deleted: bool = False, validate: bool = True
     ) -> Optional[User]:
         query = (
             select(SqlModelUserModel).where(SqlModelUserModel.email == str(email))
@@ -58,7 +58,7 @@ class SqlModelUserRepository(UserRepository):
         )
         user = self.db_connection.exec(query).first()
 
-        return user.to_entity() if user else None
+        return user.to_entity(validate) if user else None
 
     def save(self, user: User) -> bool:
         user_model = SqlModelUserModel.from_entity(user)

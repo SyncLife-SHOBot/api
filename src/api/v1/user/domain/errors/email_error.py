@@ -9,4 +9,4 @@ class EmailTypeError(Enum):
 
 class EmailError(UserError):
     def __init__(self, error_type: EmailTypeError):
-        super().__init__(f"Error de Email: {error_type.value}")
+        super().__init__(error_type.value)

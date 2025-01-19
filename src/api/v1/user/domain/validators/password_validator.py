@@ -1,10 +1,9 @@
 import re
 
 import bcrypt
+from zxcvbn import zxcvbn
 
 from src.api.v1.user.domain.errors import PasswordError, PasswordTypeError
-
-# import zxcvbn
 
 
 class PasswordValidator:
@@ -22,9 +21,9 @@ class PasswordValidator:
         if not re.search(r"[\W_]", password):
             raise PasswordError(PasswordTypeError.MISSING_SPECIAL)
 
-        # result = zxcvbn(password)
-        # if result["score"] < 3:
-        #     raise PasswordError(PasswordTypeError.WEAK_PASSWORD)
+        result = zxcvbn(password)
+        if result["score"] < 3:
+            raise PasswordError(PasswordTypeError.WEAK_PASSWORD)
 
         return password
 

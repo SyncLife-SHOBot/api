@@ -17,7 +17,7 @@ class UserRepository(ABC):
 
     @abstractmethod
     def find_by_email(
-        self, email: Email, include_deleted: bool = False
+        self, email: Email, include_deleted: bool = False, validate: bool = True
     ) -> Optional[User]:
         pass
 

@@ -15,7 +15,9 @@ class LoginUseCase:
     def execute(self, dto: LoginDto) -> User:
         email = Email(dto.email)
 
-        user = UserRepositoryValidator.user_found(self.repository.find_by_email(email))
+        user = UserRepositoryValidator.user_found(
+            self.repository.find_by_email(email=email, validate=False)
+        )
 
         if not user.password.check_password(dto.password):
             raise UserValidationError(UserValidationTypeError.INVALID_CREDENTIALS)

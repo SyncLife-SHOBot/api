@@ -14,4 +14,4 @@ class PasswordTypeError(Enum):
 
 class PasswordError(UserError):
     def __init__(self, error_type: PasswordTypeError):
-        super().__init__(f"Error de contraseña: {error_type.value}")
+        super().__init__(error_type.value)
