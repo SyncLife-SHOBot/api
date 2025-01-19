@@ -9,4 +9,4 @@ class PhoneTypeError(Enum):
 
 class PhoneError(UserError):
     def __init__(self, error_type: PhoneTypeError):
-        super().__init__(f"Error de teléfono: {error_type.value}")
+        super().__init__(error_type.value)

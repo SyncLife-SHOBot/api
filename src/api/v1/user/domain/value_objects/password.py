@@ -8,10 +8,12 @@ from src.api.v1.user.domain.validators import PasswordValidator
 @dataclass(frozen=True)
 class Password:
     password: str
+    validate: bool = True
 
     def __post_init__(self) -> None:
         if not PasswordValidator.is_encrypted(self.password):
-            PasswordValidator.validate(self.password)
+            if self.validate:
+                PasswordValidator.validate(self.password)
             encrypted_password = PasswordValidator.encrypt_password(self.password)
             object.__setattr__(self, "password", encrypted_password)
 
