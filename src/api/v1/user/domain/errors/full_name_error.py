@@ -11,4 +11,4 @@ class FullNameTypeError(Enum):
 
 class FullNameError(UserError):
     def __init__(self, error_type: FullNameTypeError):
-        super().__init__(f"Error de nombre: {error_type.value}")
+        super().__init__(error_type.value)

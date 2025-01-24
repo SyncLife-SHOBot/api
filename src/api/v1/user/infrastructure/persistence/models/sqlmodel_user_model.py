@@ -68,11 +68,11 @@ class SqlModelUserModel(SQLModel, table=True):
             updated_at=entity.updated_at,
         )
 
-    def to_entity(self) -> User:
+    def to_entity(self, validate: bool = True) -> User:
         return User(
             uuid=Uuid(self.id),
             email=Email(self.email),
-            password=Password(self.password),
+            password=Password(self.password, validate),
             full_name=FullName(self.first_name, self.last_name),
             birth_date=self.birth_date,
             phone=Phone(self.phone),

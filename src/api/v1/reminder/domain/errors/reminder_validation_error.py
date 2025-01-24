@@ -10,7 +10,7 @@ class ReminderValidationTypeError(Enum):
     MODIFY_FAILED = "No se pudo modificar el recordatorio"
     TITLE_FAILED = "El nombre del recordatorio no puede ser nulo"
     NOT_OWNED = "Este recordatorio no pertenece al usuario"
-    INVALID_DATE = "INVALID_DATE"
+    INVALID_DATE = "La fecha del recordatorio es invalida"
 
 
 class ReminderValidationError(ReminderError):
