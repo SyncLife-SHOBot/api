@@ -16,8 +16,13 @@ class ReminderRepositoryValidator:
     def reminder_found(
         reminder: Optional[Reminder],
     ) -> Reminder:
+        """
+        Valida que un recordatorio exista. Si no existe, lanza una excepción.
+        """
         if reminder is None:
-            raise ReminderValidationError(ReminderValidationTypeError.NOT_FOUND)
+            raise ReminderValidationError(
+                ReminderValidationTypeError.REMINDER_NOT_FOUND
+            )
         return reminder
 
     @staticmethod
@@ -26,7 +31,14 @@ class ReminderRepositoryValidator:
         user_id: Uuid,
         reminder_id: Uuid,
     ) -> None:
-
-        reminder = repository.find_by_id(reminder_id)
-        if reminder is None or reminder.user_id != user_id:
-            raise ReminderValidationError(ReminderValidationTypeError.NOT_OWNED)
+        """
+        Valida que un recordatorio exista y que el usuario sea el propietario.
+        Lanza una excepción si alguna de estas condiciones no se cumple.
+        """
+        reminder = ReminderRepositoryValidator.reminder_found(
+            repository.find_by_id(reminder_id)
+        )
+        if reminder.user_id != user_id:
+            raise ReminderValidationError(
+                ReminderValidationTypeError.REMINDER_NOT_OWNED_BY_USER
+            )

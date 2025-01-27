@@ -17,9 +17,7 @@ class Reminder:
     is_deleted: bool
 
     def __post_init__(self) -> None:
-        ReminderValidator.validate_all(
-            title=self.title,
-        )
+        ReminderValidator.validate_all(self.title, self.remind_date)
 
     def __repr__(self) -> str:
         return (
