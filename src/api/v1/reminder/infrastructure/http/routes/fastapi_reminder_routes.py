@@ -18,7 +18,7 @@ from src.api.v1.user.infrastructure.http.services import InMemorySessionService
 router: APIRouter = APIRouter(prefix="/reminder", tags=["Reminder"])
 
 
-@router.post("/add", response_model=PydanticAddItemResponseDto)
+@router.post("/", response_model=PydanticAddItemResponseDto)
 async def add_reminder_item(
     dto: PydanticAddItemRequestDto,
     user_id: str = Depends(InMemorySessionService.validate_session_token),
@@ -26,7 +26,7 @@ async def add_reminder_item(
     return await FastApiReminderController.create(dto, user_id)
 
 
-@router.get("/view/{reminder_id}", response_model=PydanticViewItemResponseDto)
+@router.get("/{reminder_id}", response_model=PydanticViewItemResponseDto)
 async def view_reminder_item(
     reminder_id: str,
     user_id: str = Depends(InMemorySessionService.validate_session_token),
@@ -34,14 +34,14 @@ async def view_reminder_item(
     return await FastApiReminderController.view(reminder_id, user_id)
 
 
-@router.get("/view_all", response_model=List[PydanticViewItemResponseDto])
+@router.get("/", response_model=List[PydanticViewItemResponseDto])
 async def view_all_reminder_items(
     user_id: str = Depends(InMemorySessionService.validate_session_token),
 ) -> List[PydanticViewItemResponseDto]:
     return await FastApiReminderController.view_all(user_id)
 
 
-@router.put("/modify", response_model=PydanticModifyItemResponseDto)
+@router.put("/", response_model=PydanticModifyItemResponseDto)
 async def modify_reminder_item(
     dto: PydanticModifyItemRequestDto,
     user_id: str = Depends(InMemorySessionService.validate_session_token),
@@ -49,7 +49,7 @@ async def modify_reminder_item(
     return await FastApiReminderController.update(dto, user_id)
 
 
-@router.delete("/delete/{reminder_id}", response_model=PydanticDeleteItemResponseDto)
+@router.delete("/", response_model=PydanticDeleteItemResponseDto)
 async def delete_reminder_item(
     reminder_id: str,
     user_id: str = Depends(InMemorySessionService.validate_session_token),
