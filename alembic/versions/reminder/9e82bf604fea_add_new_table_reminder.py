@@ -1,4 +1,4 @@
-"""Prueba cambios en Reminder
+"""Add new table Reminder
 
 Revision ID: 9e82bf604fea
 Revises: 03b93784fb26
@@ -13,7 +13,7 @@ from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = "9e82bf604fea"
-down_revision: Union[str, None] = None
+down_revision: Union[str, None] = "f69ce40494e3"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
