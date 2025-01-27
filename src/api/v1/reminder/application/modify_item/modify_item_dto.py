@@ -7,4 +7,5 @@ class ModifyReminderItemDto:
     reminder_id: str
     title: str
     content: str
+    user_id: str
     remind_date: datetime

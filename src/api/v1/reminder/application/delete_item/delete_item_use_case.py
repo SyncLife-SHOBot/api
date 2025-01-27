@@ -14,21 +14,27 @@ from src.api.v1.shared.domain.value_objects import Uuid
 
 
 class DeleteReminderItemUseCase:
-    def __init__(self, repository: ReminderRepository) -> None:
+    def __init__(self, repository: ReminderRepository):
         self.repository = repository
 
     def execute(self, dto: DeleteReminderItemDto) -> Reminder:
-        # Buscar el recordatorio en el repositorio usando el UUID
+        # Validar que el usuario sea el propietario y que el recordatorio exista
+        ReminderRepositoryValidator.user_owns_reminder(
+            self.repository,
+            Uuid(dto.user_id),
+            Uuid(dto.reminder_id),
+        )
+
+        # Buscar y validar el recordatorio
         reminder = ReminderRepositoryValidator.reminder_found(
             self.repository.find_by_id(Uuid(dto.reminder_id))
         )
 
-        # Intentar eliminar el recordatorio
+        # Eliminar el recordatorio
         is_deleted, reminder_deleted = self.repository.delete(reminder)
-
-        # Si la eliminación falla, lanza un error
         if not is_deleted or reminder_deleted is None:
-            raise ReminderValidationError(ReminderValidationTypeError.DELETE_FAILED)
+            raise ReminderValidationError(
+                ReminderValidationTypeError.REMINDER_DELETE_FAILED
+            )
 
-        # Retornar el recordatorio eliminado
         return reminder_deleted
