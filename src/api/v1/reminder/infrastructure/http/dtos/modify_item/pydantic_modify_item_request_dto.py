@@ -12,6 +12,7 @@ class PydanticModifyItemRequestDto(BaseModel):
     title: str
     content: str
     remind_date: datetime
+    user_id: str
 
     def to_application(self) -> ModifyReminderItemDto:
         return ModifyReminderItemDto(
@@ -19,6 +20,7 @@ class PydanticModifyItemRequestDto(BaseModel):
             title=self.title,
             content=self.content,
             remind_date=self.remind_date,
+            user_id=self.user_id,
         )
 
     @classmethod
@@ -30,4 +32,5 @@ class PydanticModifyItemRequestDto(BaseModel):
             title=app_dto.title,
             content=app_dto.content,
             remind_date=app_dto.remind_date,
+            user_id=app_dto.user_id,
         )

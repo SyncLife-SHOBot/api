@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from sqlmodel import Field, Relationship, SQLModel
@@ -17,7 +17,9 @@ class SqlModelReminderModel(SQLModel, table=True):
     user_id: str = Field(foreign_key="users.id", nullable=False, max_length=36)
     title: str = Field(nullable=False)
     content: str = Field(nullable=False)
-    creation_date: datetime = Field(default_factory=datetime.utcnow, nullable=False)
+    creation_date: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc), nullable=False
+    )
     remind_date: datetime = Field(nullable=False)
     is_deleted: bool = Field(default=False, nullable=False)
     updated_at: Optional[datetime] = Field(default=None)
