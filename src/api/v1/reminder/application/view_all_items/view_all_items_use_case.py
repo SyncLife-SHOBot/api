@@ -11,7 +11,6 @@ from src.api.v1.reminder.domain.errors import (
 from src.api.v1.reminder.domain.repositories.reminder_repository import (
     ReminderRepository,
 )
-from src.api.v1.shared.domain.value_objects import Uuid
 
 
 class ViewAllReminderItemsUseCase:
@@ -19,11 +18,8 @@ class ViewAllReminderItemsUseCase:
         self.repository = repository
 
     def execute(self, dto: ViewAllReminderItemsDto) -> List[Reminder]:
-        # Validar que el user_id es un string si es necesario
-        user_id = Uuid(dto.user_id) if isinstance(dto.user_id, str) else dto.user_id
-
         # Buscar todos los recordatorios del usuario
-        reminders = self.repository.find_all_by_user_id(user_id)
+        reminders = self.repository.find_all_by_user_id(dto.user_id)
 
         # Lanzar error si no hay recordatorios
         if not reminders:
