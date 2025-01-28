@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Optional
 
 from sqlmodel import Field, Relationship, SQLModel
@@ -17,9 +17,7 @@ class SqlModelReminderModel(SQLModel, table=True):
     user_id: str = Field(foreign_key="users.id", nullable=False, max_length=36)
     title: str = Field(nullable=False)
     content: str = Field(nullable=False)
-    creation_date: datetime = Field(
-        default_factory=lambda: datetime.now(timezone.utc), nullable=False
-    )
+    created_at: datetime = Field(default_factory=datetime.now)
     remind_date: datetime = Field(nullable=False)
     is_deleted: bool = Field(default=False, nullable=False)
     updated_at: Optional[datetime] = Field(default=None)
@@ -34,6 +32,7 @@ class SqlModelReminderModel(SQLModel, table=True):
             content=entity.content,
             remind_date=entity.remind_date,
             updated_at=entity.updated_at,
+            created_at=entity.created_at,
             is_deleted=entity.is_deleted,
         )
 
@@ -45,5 +44,6 @@ class SqlModelReminderModel(SQLModel, table=True):
             content=self.content,
             remind_date=self.remind_date,
             updated_at=self.updated_at,
+            created_at=self.created_at,
             is_deleted=self.is_deleted,
         )

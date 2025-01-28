@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from src.api.v1.reminder.application.add_item.add_item_dto import AddReminderItemDto
 from src.api.v1.reminder.domain.entities import Reminder
 from src.api.v1.reminder.domain.errors import (
@@ -24,8 +26,8 @@ class AddReminderItemUseCase:
             self.user_repository.find_by_id(Uuid(dto.user_id))
         )
 
-        # Validar la fecha del recordatorio
-        ReminderValidator.validate_reminder_date(dto.remind_date)
+        # Valido todo
+        ReminderValidator.validate_all(dto.title, dto.remind_date)
 
         # Crear el recordatorio
         reminder = Reminder(
@@ -35,6 +37,7 @@ class AddReminderItemUseCase:
             title=dto.title,
             content=dto.content,
             remind_date=dto.remind_date,
+            created_at=datetime.now(),
             updated_at=None,
         )
 

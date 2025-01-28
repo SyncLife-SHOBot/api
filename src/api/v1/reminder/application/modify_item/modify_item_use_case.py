@@ -26,8 +26,8 @@ class ModifyReminderItemUseCase:
             Uuid(dto.reminder_id),
         )
 
-        # Validar la fecha del recordatorio
-        ReminderValidator.validate_reminder_date(dto.remind_date)
+        # Valido todo
+        ReminderValidator.validate_all(dto.title, dto.remind_date)
 
         # Validar que el recordatorio exista
         reminder = ReminderRepositoryValidator.reminder_found(
