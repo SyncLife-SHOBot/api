@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 
 from src.api.v1.reminder.domain.errors import (
     ReminderValidationError,
@@ -17,13 +17,10 @@ class ReminderValidator:
 
     @staticmethod
     def validate_reminder_date(remind_date: datetime) -> None:
-        # Convertir remind_date a aware si es naive
-        if remind_date.tzinfo is None:
-            remind_date = remind_date.replace(tzinfo=timezone.utc)
+        current_date = datetime.now()
+        remind_date = remind_date.replace(tzinfo=None)
 
-        creation_date = datetime.now(timezone.utc)
-
-        if remind_date < creation_date:
+        if remind_date < current_date:
             raise ReminderValidationError(
                 ReminderValidationTypeError.REMINDER_DATE_INVALID
             )
